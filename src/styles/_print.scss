@@ -1,5 +1,9 @@
-
-a {
-	text-decoration: none;
-	color: inherit;
+@media print {
+	h1 {
+		font-size: 2rem;
+	}
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 }
