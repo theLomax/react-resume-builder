@@ -2,12 +2,12 @@ export interface ResumeProfile {
 	firstName: string
 	lastName: string
 	title?: string
+	subtitle?: string[]
 	email: string
 	phone?: string
 	linkedin?: string
-	city?: string
-	state?: string
-	zipCode?: string
+	location?: string
+	site?: string
 }
 
 export interface ResumeRole {

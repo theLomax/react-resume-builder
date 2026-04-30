@@ -16,8 +16,6 @@ export function useResumeData() {
 				if (profileError) throw profileError
 				if (!profile) throw new Error('No profile found')
 
-			const [city, state] = (profile.location ?? '').split(', ')
-
 			// fetch summary —————————————————————————————————————————————
 			const { data: summaryRows, error: summaryError } = await supabase
 				.from('profile_summary')
@@ -95,8 +93,8 @@ export function useResumeData() {
 					email: profile.email,
 					phone: profile.phone ?? undefined,
 					linkedin: profile.linkedin ?? undefined,
-					city: city,
-					state: state
+					location: profile.location,
+					site: profile.site
 				},
 				summary: summaryRows.map(row => row.text),
 				roles: rolesRows.map(row => ({

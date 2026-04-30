@@ -1,0 +1,31 @@
+hgroup {
+	span {
+		display: inline-block;
+		white-space: pre-wrap;
+
+		&:nth-child(n+3) {
+			display: block;
+		}
+	}
+}
+
+section {
+	&.contact {
+		ul {
+			display: flex;
+			justify-content: space-around;
+			padding-inline: 0;
+
+			li {
+				list-style-type: none;
+				text-box-trim: trim-both;
+				text-box-edge: cap alphabetic;
+				display: flex;
+				gap: .25rem;
+				&.location {
+					gap: 0;
+				}
+			}
+		}
+	}
+}

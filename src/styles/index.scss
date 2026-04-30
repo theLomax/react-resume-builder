@@ -1,3 +1,6 @@
+@use './print';
+@import "tailwindcss";
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -10,6 +13,7 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --shadowBrutal: .5rem .5rem rgba(0,0,0,.5);
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -30,7 +34,7 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
+@media screen and (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;
@@ -71,12 +75,17 @@ h2 {
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-h);
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 3rem;
   letter-spacing: -1.68px;
-  margin: 32px 0;
+  line-height: 1;
+  padding: 0;
+  margin-block: .75rem .25rem;
+  margin-inline: 0;
   @media (max-width: 1024px) {
     font-size: 36px;
     margin: 20px 0;
@@ -87,6 +96,8 @@ h2 {
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
+  padding-block: 0.25rem 0.5rem;
+  border-block-end: 1px solid var(--accent-border);
   @media (max-width: 1024px) {
     font-size: 20px;
   }
@@ -108,4 +119,15 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+section {
+    text-align: left;
+    margin-block-start: 1rem;
+    border: 1px solid var(--accent-border);
+    margin-inline: 1rem;
+    border-radius: 0.5rem 1.5rem;
+    corner-shape: bevel;
+    padding: .5rem 1rem;
+    box-shadow: var(--accent-bg);
 }
