@@ -14,11 +14,12 @@ interface Props {
 
 export function ResumePreview({ data, isPrint = true }: Props) {
 
-	const condensedUrl  = (url: string) =>
+	const condensedUrl = (url: string) =>
 		url.replace(/^https?:\/\/(www\.)?/, '')
 
 	return (
 		<>
+			{/* HEADER ——————————————————————————————————————— */}
 			<header>
 				<h1>
 					{data.profile.firstName} {data.profile.lastName}
@@ -31,13 +32,15 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 						{data.profile.subtitle?.map((row, i) => (
 							<span key={i}>{row}</span>
 						)) ?? (
-							<>
-								<span>  |  subtitle</span><span>subtitle  |  subtitle  |  subtitle</span>
-							</>
-						)}
+								<>
+									<span>  |  subtitle</span><span>subtitle  |  subtitle  |  subtitle</span>
+								</>
+							)}
 					</p>
 				</hgroup>
 			</header>
+
+			{/* CONTACT ——————————————————————————————————————— */}
 			{isPrint && (
 				<section id="contact" className={styles.contact}>
 					<h2>Contact Information</h2>
@@ -76,6 +79,60 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 					</ul>
 				</section>
 			)}
+
+			{/* SUMMARY ——————————————————————————————————————— */}
+			<section id="summary" className={styles.summary}>
+				<h2>Summary</h2>
+				{data.summary.map((item, i) => (
+					<p key={i}>{item}</p>
+				))}
+			</section>
+
+			{/* EDUCATION ——————————————————————————————————————— */}
+			<section id="education" className={styles.education}>
+				<h2>Education</h2>
+				<div className={styles.wrapper}>
+					{data.education.map((edu, i) => (
+						<div className={styles.entry} key={i}>
+							<img></img>
+							<h3>{edu.institution}</h3>
+							<p className="degree">{edu.degree}</p>
+							{edu.year && <p className="year">{edu.year}</p>}
+						</div>
+					))}
+				</div>
+			</section>
+			
+
+			{/* EXPERIENCE ——————————————————————————————————————— */}
+			<section id="experience" className={styles.experience}>
+				<h2>Experience</h2>
+				<div className={styles.wrapper}>
+					{data.roles.map((role, i) => (
+						<div className={styles.entry} key={i}>
+							<img></img>
+							<h3>{role.company}{role.company_em && <span> ({role.company_em})</span>}</h3>
+							<p className={styles.title}>{role.title}</p>
+							<p><span className={styles.start_year}>{role.start_year}</span><span> - </span><span className={styles.end_year}>{role.end_year}</span></p>
+							<ul className={styles.keytech}>
+								{role.keyTech.map((tech, i) => (
+								<li key={i}>{tech}</li>
+								))}
+							</ul>
+							<ul className={styles.desc}>
+								{role.actionItems.map((item, i) => (
+									<li key={i}>{item}</li>
+								))}
+							</ul>
+						</div>
+					))}
+				</div>
+			</section>
+
+			<aside>
+				<h3 className={styles.skills}>Skills</h3>
+			</aside>
+
 		</>
 	)
 }

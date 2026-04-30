@@ -1,3 +1,7 @@
+:root {
+	--entry-gap: 2rem;
+}
+
 hgroup {
 	span {
 		display: inline-block;
@@ -9,9 +13,30 @@ hgroup {
 	}
 }
 
+h3 {
+	font-size: 1.25rem;
+	line-height: 1;
+	margin-bottom: .25rem;
+}
+
 section {
+
+	// >p {
+	// 	&:first-of-type {
+	// 		text-box-trim: trim-start;
+	// 		text-box-edge: cap alphabetic;
+	// 		margin-block-start: .25rem;
+	// 	}
+
+	// 	&:last-of-type {
+	// 		text-box-trim: trim-end;
+	// 		text-box-edge: ex alphabetic;
+	// 	}
+	// }
+
 	&.contact {
 		padding-block-end: .5rem;
+
 		ul {
 			display: flex;
 			justify-content: space-around;
@@ -23,10 +48,108 @@ section {
 				text-box-edge: cap alphabetic;
 				display: flex;
 				gap: .25rem;
+
 				&.location {
 					gap: 0;
 				}
 			}
 		}
 	}
+
+	&.education,
+	&.experience {
+		.wrapper {
+			display: flex;
+			gap: var(--entry-gap) 1rem;
+		}
+
+		.entry {
+			display: grid;
+			grid-template-columns: 80px 1fr;
+			column-gap: 1rem;
+
+			img {
+				grid-column: 1;
+				width: 80px;
+				aspect-ratio: 1 / 1;
+				grid-row: 1 / 4;
+			}
+
+			h3,
+			p {
+				&:nth-child(n+2) {
+					grid-column: 2;
+				}
+
+				&:nth-child(2) {
+					text-box-trim: trim-end;
+				}
+			}
+		}
+	}
+
+	&.education {
+		.wrapper {
+			flex-wrap: wrap;
+		}
+
+		.entry {
+			flex: 1 300px;
+			grid-template-rows: repeat(3, auto);
+			grid-template-areas:
+				"img title1"
+				"img title2"
+				"img title3"
+		}
+	}
+
+	&.experience {
+		.wrapper {
+			flex-wrap: wrap;
+		}
+
+		.keytech {
+			grid-area: tech;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: space-around;
+			text-wrap: balance;
+			font-style: italic;
+			margin-block: .5rem .25rem;
+			padding-block: 0;
+			line-height: 1.5;
+			border-block: 1px solid var(--accent-bg);
+		}
+
+		.desc {
+			grid-area: desc;
+			list-style-type: '– ';
+			padding-inline-start: .75rem;
+			li:not(:last-of-type) {
+				margin-block-end: .33rem;
+			}
+		}
+
+		.entry {
+			margin-block-start: calc(var(--entry-gap) - .5rem);
+			flex: 100%;
+			grid-template-rows: repeat(3, auto) 1fr auto;
+			grid-template-areas:
+				"img title1"
+				"img title2"
+				"img title3"
+				"tech tech"
+				"desc desc";
+
+			&:not(:first-child, .no-line) {
+				padding-block-start: var(--entry-gap);
+				border-block-start: 1px solid var(--accent-border);
+			}
+			
+		}
+	}
+
+
+
 }

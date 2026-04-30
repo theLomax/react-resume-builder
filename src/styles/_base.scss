@@ -10,7 +10,6 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-  --shadowBrutal: .5rem .5rem rgba(0,0,0,.5);
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -68,7 +67,8 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-h);
@@ -92,7 +92,7 @@ h2 {
   font-size: 24px;
   line-height: 118%;
   letter-spacing: -0.24px;
-  margin: 0 0 8px;
+  margin: 0 0 .5rem;
   padding-block: 0.25rem 0.5rem;
   border-block-end: 1px solid var(--accent-border);
   @media (max-width: 1024px) {
@@ -121,10 +121,9 @@ code {
 section {
     text-align: left;
     margin-block-start: 1rem;
-    border: 1px solid var(--accent-border);
+    border: 1px solid var(--accent);
     margin-inline: 1rem;
     border-radius: 0.5rem 1.5rem .5rem .75rem;
     corner-shape: bevel;
     padding: .5rem 1rem .75rem;
-    box-shadow: var(--accent-bg);
 }
