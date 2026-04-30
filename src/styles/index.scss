@@ -1,5 +1,5 @@
-@use './print';
-@import "tailwindcss";
+@import './print';
+@import 'tailwindcss';
 
 :root {
   --text: #6b6375;
@@ -86,10 +86,10 @@ h1 {
   padding: 0;
   margin-block: .75rem .25rem;
   margin-inline: 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  // @media (max-width: 1024px) {
+  //   font-size: 36px;
+  //   margin: 20px 0;
+  // }
 }
 h2 {
   font-size: 24px;
@@ -126,8 +126,8 @@ section {
     margin-block-start: 1rem;
     border: 1px solid var(--accent-border);
     margin-inline: 1rem;
-    border-radius: 0.5rem 1.5rem;
+    border-radius: 0.5rem 1.5rem .5rem .75rem;
     corner-shape: bevel;
-    padding: .5rem 1rem;
+    padding: .5rem 1rem .75rem;
     box-shadow: var(--accent-bg);
 }

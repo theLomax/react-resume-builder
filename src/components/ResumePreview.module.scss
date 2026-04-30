@@ -11,6 +11,7 @@ hgroup {
 
 section {
 	&.contact {
+		padding-block-end: .5rem;
 		ul {
 			display: flex;
 			justify-content: space-around;
