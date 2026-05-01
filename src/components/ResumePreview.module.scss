@@ -4,17 +4,22 @@
 
 header {
 	display: grid;
-	
-    grid-template-columns: 200px 1fr;
-    grid-template-areas:
-			"aside bravo"
-			"aside echo";
-		@media print {
-		grid-template-columns: 100px 1fr;
+	grid-template-columns: 200px 1fr;
+	grid-template-areas:
+		"aside bravo"
+		"aside echo";
+	@media (width <= 600px) {
 		grid-template-areas:
-			"alpa bravo"
-			"charlie echo";
-		}
+			"bravo"
+			"echo";
+		grid-template-columns: 1fr;
+	}
+	@media print {
+	grid-template-columns: 100px 1fr;
+	grid-template-areas:
+		"alpa bravo"
+		"charlie echo";
+	}
 	h1 {
 		grid-area: bravo;
 	}
@@ -46,6 +51,12 @@ main {
 		"contact contact"
 		"aside sections";
 	grid-template-columns: 200px 1fr;
+	@media screen and (width <= 600px) {
+		grid-template-areas:
+			"sections"
+			"aside";
+		grid-template-columns: 1fr;
+	}
 }
 
 .sections {
@@ -63,6 +74,7 @@ main {
 
 			ul {
 				display: flex;
+				flex-wrap: wrap;
 				justify-content: space-around;
 				padding-inline: 0;
 
@@ -160,7 +172,8 @@ main {
 			}
 
 			hr {
-				width: 100%;
+				width: 65%;
+				margin-inline: auto;
 				color: var(--accent-border);
 			}
 
@@ -197,6 +210,10 @@ aside.skills {
 	// @media (prefers-color-scheme: dark) {
 	// 	background: #0008;
 	// }
+	@media screen and (width <= 1126px) {
+		
+	border-inline-start: none;
+	}
 	@media print {
 		background: var(--bg2);
 		padding-top: 0;
@@ -208,6 +225,15 @@ aside.skills {
 		padding-top: 14rem;
 		margin-top: -13.5rem;
 		height: calc(100% + 15rem);
+	}
+
+	@media screen and (width <= 600px) {
+		margin-block-start: 1rem;
+		border: 1px solid var(--accent);
+		margin-inline: 1rem;
+		border-radius: 0.5rem 1.5rem .5rem .75rem;
+		corner-shape: bevel;
+		padding: .5rem 1rem .75rem;
 	}
 
 	h3, ul {

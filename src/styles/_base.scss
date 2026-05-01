@@ -26,7 +26,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (max-width: 1024px) {
+  @media (width <= 1024px) {
     font-size: 16px;
   }
 }
@@ -108,7 +108,7 @@ h2 {
   margin: 0 0 .5rem;
   padding-block: 0.25rem 0.5rem;
   border-block-end: 1px solid var(--accent);
-  @media (max-width: 1024px) {
+  @media (width <= 1024px) {
     font-size: 20px;
   }
 }
