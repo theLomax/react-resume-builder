@@ -5,7 +5,11 @@ import type { ResumeData } from "../types/resume"
 export function useResumeData() {
 	return useQuery<ResumeData>({
 		queryKey: ['resume'],
+  staleTime: 0,
 		queryFn: async () => {
+
+			const { data: { session } } = await supabase.auth.getSession()
+console.log('session', session)
 
 			// fetch profile —————————————————————————————————————————————
 			const { data: profile, error: profileError } = await supabase
@@ -70,7 +74,9 @@ export function useResumeData() {
 			const { data: skillGroupRows, error:skillGroupError } = await supabase
 				.from('skill_groups')
 				.select('*')
-				.order('display_order')
+
+
+			console.log('skillGroupRows', skillGroupRows, 'error', skillGroupError)
 
 			if (skillGroupError) throw skillGroupError
 			if (!skillGroupRows) throw Error('No skill groups found')
@@ -84,7 +90,6 @@ export function useResumeData() {
 
 			if (skillError) throw skillError
 			if (!skillRows) throw Error('No skills found')
-
 
 			return {
 				profile: {

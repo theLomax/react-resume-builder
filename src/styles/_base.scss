@@ -1,12 +1,13 @@
 :root {
   --text: #6b6375;
   --text-h: #08060d;
-  --bg: #fff;
+  --bg: #efefef;
+  --bg2: #fefefe;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent: hsl(252, 50%, 62%);
+  --accent-bg: hsla(250, 50%, 52%, 0.1);
+  --accent-border: hsla(250, 50%, 62%, 0.502);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
@@ -32,14 +33,16 @@
 
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
+
+    --text: #efefef;
+    --text-h: #ffff;
+    --bg: #1b1b1b;
+    --bg2: #0b0b0b;
     --border: #2e303a;
     --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
+  --accent: hsl(225, 50%, 50%);
+    --accent-bg: hsla(225, 95%, 75%, 0.15);
+    --accent-border: hsla(225, 95%, 50%, 0.05);
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -50,12 +53,21 @@
   }
 }
 
+@media print {
+  :root {
+    --bg: #fff;
+    --bg2: #fff;
+    --text: #1b1b1b;
+    --text-h: #1b1b1b;
+  }
+}
+
 #root {
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
+  // border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -119,11 +131,14 @@ code {
 }
 
 section {
-    text-align: left;
-    margin-block-start: 1rem;
-    border: 1px solid var(--accent);
-    margin-inline: 1rem;
-    border-radius: 0.5rem 1.5rem .5rem .75rem;
-    corner-shape: bevel;
-    padding: .5rem 1rem .75rem;
+  text-align: left;
+  margin-block-start: 1rem;
+  border: 1px solid var(--accent);
+  margin-inline: 1rem;
+  border-radius: 0.5rem 1.5rem .5rem .75rem;
+  corner-shape: bevel;
+  padding: .5rem 1rem .75rem;
+  @media print {
+    border: none;
+  }
 }
