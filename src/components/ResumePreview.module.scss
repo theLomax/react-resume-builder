@@ -84,7 +84,6 @@ main {
 		&.experience {
 			.wrapper {
 				display: flex;
-				gap: var(--entry-gap) 1rem;
 			}
 
 			.entry {
@@ -115,6 +114,7 @@ main {
 		&.education {
 			.wrapper {
 				flex-wrap: wrap;
+				gap: var(--entry-gap) 1rem;
 			}
 
 			.entry {
@@ -130,6 +130,7 @@ main {
 		&.experience {
 			.wrapper {
 				flex-wrap: wrap;
+				gap: calc(var(--entry-gap)/2) 1rem;
 			}
 
 			.keytech {
@@ -144,6 +145,9 @@ main {
 				padding-block: 0;
 				line-height: 1.5;
 				border-block: 1px solid var(--accent-bg);
+				&.empty {
+					border-block-end: none;
+				}
 			}
 
 			.desc {
@@ -155,8 +159,13 @@ main {
 				}
 			}
 
+			hr {
+				width: 100%;
+				color: var(--accent-border);
+			}
+
 			.entry {
-				margin-block-start: calc(var(--entry-gap) - .5rem);
+				// margin-block-start: calc(var(--entry-gap) - .5rem);
 				flex: 100%;
 				grid-template-rows: repeat(3, auto) 1fr auto;
 				grid-template-areas:
@@ -167,8 +176,8 @@ main {
 					"desc desc";
 
 				&:not(:first-child, .no-line) {
-					padding-block-start: var(--entry-gap);
-					border-block-start: 1px solid var(--accent-border);
+					// padding-block-start: var(--entry-gap);
+					// border-block-start: 1px solid var(--accent-bg);
 				}
 				
 			}
@@ -177,30 +186,45 @@ main {
 }
 
 aside.skills {
-    grid-area: aside;
-    background: var(--bg2);
-    text-align: left;
-    padding-inline: 1rem;
-    padding-top: 7.75rem;
-    margin-top: -6rem;
-    z-index: 1;
-		border-inline: 1px solid var(--accent);
-		// @media (prefers-color-scheme: dark) {
-		// 	background: #0008;
-		// }
-		@media print {
-			background: var(--bg2);
-			padding-top: 0;
-			margin-top: 0;
-			height: unset;
-			top: 1rem;
-			position: relative;
-			padding-top: .75rem;
-			padding-top: 14rem;
-			margin-top: -12.25rem;
-			height: calc(100% + 15rem);
+	grid-area: aside;
+	background: var(--bg2);
+	text-align: left;
+	padding-inline: 1rem;
+	padding-top: 7.75rem;
+	margin-top: -6rem;
+	z-index: 1;
+	border-inline: 1px solid var(--accent);
+	// @media (prefers-color-scheme: dark) {
+	// 	background: #0008;
+	// }
+	@media print {
+		background: var(--bg2);
+		padding-top: 0;
+		margin-top: 0;
+		height: unset;
+		top: 1rem;
+		position: relative;
+		padding-top: .75rem;
+		padding-top: 14rem;
+		margin-top: -13.5rem;
+		height: calc(100% + 15rem);
+	}
+
+	h3, ul {
+		color: var(--text-h);
+	}
+
+	section {
+		padding-inline: 0;
+		margin: 0;
+		border: none;
+		border-radius: 0;
+		ul {
+		margin-block-start: 0.25rem;
+			border-block-start: 1px solid var(--accent-bg);
+			li {
+				margin-block: .25rem;
+			}
 		}
-		h3, ul {
-			color: var(--text-h);
-		}
+	}
 }

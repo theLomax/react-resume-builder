@@ -113,29 +113,32 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 						<h2>Experience</h2>
 						<div className={styles.wrapper}>
 							{data.roles.map((role, i) => (
-								<div className={styles.entry} key={i}>
-									<img></img>
-									<h3>{role.company}{role.company_em && <span> ({role.company_em})</span>}</h3>
-									<p className={styles.title}>{role.title}</p>
-									<p><span className={styles.start_year}>{role.start_year}</span><span> - </span><span className={styles.end_year}>{role.end_year}</span></p>
-									<ul className={styles.keytech}>
-										{role.keyTech.map((tech, i) => (
-										<li key={i}>{tech}</li>
-										))}
-									</ul>
-									<ul className={styles.desc}>
-										{role.actionItems.map((item, i) => (
-											<li key={i}>{item}</li>
-										))}
-									</ul>
-								</div>
+								<>
+									{i > 0 && <hr />}
+									<div className={styles.entry} key={i}>
+										<img></img>
+										<h3>{role.company}{role.company_em && <span> ({role.company_em})</span>}</h3>
+										<p className={styles.title}>{role.title}</p>
+										<p><span className={styles.start_year}>{role.start_year}</span><span> - </span><span className={styles.end_year}>{role.end_year}</span></p>
+										<ul className={[styles.keytech, !role.keyTech?.length && styles.empty].filter(Boolean).join(' ')}>
+											{role.keyTech.map((tech, i) => (
+											<li key={i}>{tech}</li>
+											))}
+										</ul>
+										<ul className={styles.desc}>
+											{role.actionItems.map((item, i) => (
+												<li key={i}>{item}</li>
+											))}
+										</ul>
+									</div>
+								</>
 							))}
 						</div>
 					</section>
 				</div>
 
 				<aside className={styles.skills}>
-					<h3>Skills</h3>
+					<h2>Skills</h2>
 					{data.skillGroups.map((group, i) => (
 						<section className={styles.skillGroup} key={i}>
 							<h4>{group.label}</h4>

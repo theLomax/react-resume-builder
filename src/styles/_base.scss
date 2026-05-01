@@ -42,7 +42,7 @@
     --code-bg: #1f2028;
   --accent: hsl(225, 50%, 50%);
     --accent-bg: hsla(225, 95%, 75%, 0.15);
-    --accent-border: hsla(225, 95%, 50%, 0.05);
+    --accent-border: hsla(225, 75%, 50%, 0.25);
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -80,7 +80,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-h);
@@ -106,7 +107,7 @@ h2 {
   letter-spacing: -0.24px;
   margin: 0 0 .5rem;
   padding-block: 0.25rem 0.5rem;
-  border-block-end: 1px solid var(--accent-border);
+  border-block-end: 1px solid var(--accent);
   @media (max-width: 1024px) {
     font-size: 20px;
   }
