@@ -7,7 +7,16 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import LanguageIcon from '@mui/icons-material/Language'
 import { skillIcons, skillColors, skillInvert } from '../lib/skillIcons'
+import { companyLogos, companyIcons } from '../lib/companyLogos'
 import { Fragment, type SVGProps } from 'react'
+
+function CompanyLogo({ company }: { company: string }) {
+	const key = company.toLowerCase()
+	const Icon = companyIcons[key]
+	return Icon
+		? <Icon className={styles.companyIcon} role="img" aria-label={company} />
+		: <img src={companyLogos[key]} alt={company} />
+}
 
 interface Props {
 	data: ResumeData
@@ -31,13 +40,15 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 						<span>
 							{data.profile.title ?? "title"}
 						</span>
-						{data.profile.subtitle?.map((row, i) => (
-							<span key={i}>{row}</span>
-						)) ?? (
-								<>
-									<span>  |  subtitle</span><span>subtitle  |  subtitle  |  subtitle</span>
-								</>
-							)}
+						{data.profile.subtitle?.length
+						? <>
+								<span>  ·  </span>
+								{data.profile.subtitle.map((row, i) => (
+									<span key={i}>{row}</span>
+								))}
+							</>
+						: <><span>  |  subtitle</span><span>subtitle  |  subtitle  |  subtitle</span></>
+					}
 					</p>
 				</hgroup>
 			</header>
@@ -100,7 +111,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 						<div className={styles.wrapper}>
 							{data.education.map((edu, i) => (
 								<div className={styles.entry} key={i}>
-									<img></img>
+									<CompanyLogo company={edu.institution} />
 									<h3>{edu.institution}</h3>
 									<p className="degree">{edu.degree}</p>
 									{edu.year && <p className="year">{edu.year}</p>}
@@ -118,15 +129,17 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 								<Fragment key={i}>
 									{i > 0 && <hr />}
 									<div className={styles.entry} key={i}>
-										<img></img>
+										<CompanyLogo company={role.company} />
 										<h3>{role.company}{role.company_em && <span> ({role.company_em})</span>}</h3>
 										<p className={styles.title}>{role.title}</p>
 										<p><span className={styles.start_year}>{role.start_year}</span><span> - </span><span className={styles.end_year}>{role.end_year}</span></p>
+										{(role.showKeyTech ?? i < 2) && (
 										<ul className={[styles.keytech, !role.keyTech?.length && styles.empty].filter(Boolean).join(' ')}>
-											{role.keyTech.map((tech, i) => (
-											<li key={i}>{tech}</li>
+											{role.keyTech.map((tech, j) => (
+												<li key={j}>{tech}</li>
 											))}
 										</ul>
+									)}
 										<ul className={styles.desc}>
 											{role.actionItems.map((item, i) => (
 												<li key={i}>{item}</li>
@@ -143,7 +156,6 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 					<h2>Skills</h2>
 					{data.skillGroups.map((group, i) => {
 						const hasIcons = group.skills.some(skill => skillIcons[skill.toLowerCase()])
-						const BrazeIcon: FC<SVGProps<SVGElement>> = (props) => <BrazeIconRaw {...props} />
 						return (
 							<section className={[styles.skillGroup, hasIcons && styles.hasIcons].filter(Boolean).join(' ')} key={i}>
 								<h4>{group.label}</h4>

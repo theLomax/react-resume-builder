@@ -9,3 +9,5 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
+
+console.log('anon key:', import.meta.env.VITE_SUPABASE_ANON_KEY?.slice(0, 20))

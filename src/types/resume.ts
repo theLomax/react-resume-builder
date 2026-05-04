@@ -25,6 +25,7 @@ export interface ResumeRole {
 	industry?: string
 	keyTech: string[]
 	actionItems: string[]
+	showKeyTech?: boolean
 }
 
 export interface ResumeEducation {

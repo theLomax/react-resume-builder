@@ -35,7 +35,7 @@ import GsapIconRaw from '../assets/icons/gsap.svg?react'
 
 type AnyIcon = IconType | FC<SVGProps<SVGSVGElement>>
 
-function svgIcon(Raw: FC<SVGProps<SVGSVGElement>>): AnyIcon {
+export function svgIcon(Raw: FC<SVGProps<SVGSVGElement>>): AnyIcon {
 	return ({ color, size, style, ...props }: SVGProps<SVGSVGElement> & { size?: number }) => (
 		<Raw style={{ color, ...style }} width={size ?? 24} height={size ?? 24} {...props} />
 	)

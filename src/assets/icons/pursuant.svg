@@ -9,6 +9,6 @@
 			<stop offset="1" stop-color="#b6549b"/>
 		</linearGradient>
 	</defs>
-	<rect class="p-hide" fill="#101010" width="200" height="200"/>
+	<rect class="p-hide" fill="none" width="200" height="200"/>
 	<path fill="url(#linear-gradient)" d="M52.04,24.94v77.93H13.64v38.4h38.02v39.15h39.53v-39.15h77.18V24.94H52.04ZM129.78,102.87h-39.15v-39.15h39.15v39.15Z"/>
 </svg>
