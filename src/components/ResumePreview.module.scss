@@ -97,22 +97,24 @@ main {
 				grid-template-columns: 80px 1fr;
 				column-gap: 1rem;
 
-				img, svg {
-					grid-column: 1;
-					width: 80px;
-					aspect-ratio: 1 / 1;
-					grid-row: 1 / 4;
+				&:first-of-type {
+					margin-top: .5rem;
 				}
 
-				h3,
-				p {
-					&:nth-child(n+2) {
-						grid-column: 2;
-					}
+				img, svg {
+					grid-area: img;
+					width: 80px;
+					aspect-ratio: 1 / 1;
+					align-self: start;
+				}
 
-					&:nth-child(2) {
-						text-box-trim: trim-end;
-					}
+				.entryContent {
+					grid-area: content;
+				}
+
+				.location,
+				.industry {
+					display: none;
 				}
 			}
 		}
@@ -120,16 +122,13 @@ main {
 		&.education {
 			.wrapper {
 				flex-wrap: wrap;
-				gap: var(--entry-gap) 1rem;
+				gap: calc(var(--entry-gap)/4) 1rem;
 			}
 
 			.entry {
 				flex: 1 300px;
-				grid-template-rows: repeat(3, auto);
-				grid-template-areas:
-					"img title1"
-					"img title2"
-					"img title3"
+				grid-template-areas: "img content";
+				align-items: center;
 			}
 		}
 
@@ -146,13 +145,19 @@ main {
 				flex-direction: row;
 				justify-content: space-around;
 				text-wrap: balance;
+				column-gap: .25rem;
+				justify-content: space-evenly;
 				font-style: italic;
-				margin-block: .5rem .25rem;
+				margin-block-start: .5rem;
 				padding-block: 0;
 				line-height: 1.5;
-				border-block: 1px solid var(--accent-bg);
+				border-block: 1px solid var(--accent-faint);
 				&.empty {
 					border-block-end: none;
+				}
+				li {
+					border-radius: 3px;
+					padding-inline: 0.35rem;
 				}
 			}
 
@@ -160,6 +165,7 @@ main {
 				grid-area: desc;
 				list-style-type: '– ';
 				padding-inline-start: .75rem;
+				margin-block-start: .5rem;
 				li:not(:last-of-type) {
 					margin-block-end: .33rem;
 				}
@@ -172,13 +178,9 @@ main {
 			}
 
 			.entry {
-				// margin-block-start: calc(var(--entry-gap) - .5rem);
 				flex: 100%;
-				grid-template-rows: repeat(3, auto) 1fr auto;
 				grid-template-areas:
-					"img title1"
-					"img title2"
-					"img title3"
+					"img content"
 					"tech tech"
 					"desc desc";
 
@@ -186,7 +188,16 @@ main {
 					// padding-block-start: var(--entry-gap);
 					// border-block-start: 1px solid var(--accent-bg);
 				}
-				
+
+				@media print {
+					break-inside: avoid;
+				}
+			}
+
+			@media print {
+				hr {
+					break-after: avoid;
+				}
 			}
 		}
 	}
@@ -219,6 +230,7 @@ aside {
 			padding-top: .75rem;
 			padding-top: .5rem;
 			height: fit-content;
+			border-inline-start: none;
 		}
 
 		@media screen and (width <= 600px) {
@@ -240,6 +252,9 @@ aside {
 			margin: 0;
 			border: none;
 			border-radius: 0;
+			@media print {
+				break-inside: avoid;
+			}
 			ul {
 				margin-block-start: 0.25rem;
 				border-block-start: 1px solid var(--accent-bg);

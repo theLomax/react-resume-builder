@@ -105,22 +105,6 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 						))}
 					</section>
 
-					{/* EDUCATION ——————————————————————————————————————— */}
-					<section id="education" className={styles.education}>
-						<h2>Education</h2>
-						<div className={styles.wrapper}>
-							{data.education.map((edu, i) => (
-								<div className={styles.entry} key={i}>
-									<CompanyLogo company={edu.institution} />
-									<h3>{edu.institution}</h3>
-									<p className="degree">{edu.degree}</p>
-									{edu.year && <p className="year">{edu.year}</p>}
-								</div>
-							))}
-						</div>
-					</section>
-					
-
 					{/* EXPERIENCE ——————————————————————————————————————— */}
 					<section id="experience" className={styles.experience}>
 						<h2>Experience</h2>
@@ -130,9 +114,20 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 									{i > 0 && <hr />}
 									<div className={styles.entry} key={i}>
 										<CompanyLogo company={role.company} />
-										<h3>{role.company}{role.company_em && <span> ({role.company_em})</span>}</h3>
-										<p className={styles.title}>{role.title}</p>
-										<p><span className={styles.start_year}>{role.start_year}</span><span> - </span><span className={styles.end_year}>{role.end_year}</span></p>
+										<div className={styles.entryContent}>
+											<h3>{role.company}{role.company_em && <em> ({role.company_em})</em>}</h3>
+											{role.title_em && <p className={styles.titleEm}>{role.title_em}</p>}
+											<p className={styles.title}>{role.title}</p>
+											<p className={styles.dates}>
+												<span className={styles.start_year}>{role.start_year}</span>
+												<span> – </span>
+												<span className={styles.end_year}>{role.end_year}</span>
+											</p>
+											{(role.city || role.state) && (
+												<p className={styles.location}><span>Location: </span>{[role.city, role.state].filter(Boolean).join(', ')}</p>
+											)}
+											{role.industry && <p className={styles.industry}><span>Industry: </span>{role.industry}</p>}
+										</div>
 										{(role.showKeyTech ?? i < 2) && (
 										<ul className={[styles.keytech, !role.keyTech?.length && styles.empty].filter(Boolean).join(' ')}>
 											{role.keyTech.map((tech, j) => (
@@ -150,8 +145,28 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 							))}
 						</div>
 					</section>
+
+					{/* EDUCATION ——————————————————————————————————————— */}
+					<section id="education" className={styles.education}>
+						<h2>Education</h2>
+						<div className={styles.wrapper}>
+							{data.education.map((edu, i) => (
+								<div className={styles.entry} key={i}>
+									<CompanyLogo company={edu.institution} />
+									<div className={styles.entryContent}>
+										<h3>{edu.institution}</h3>
+										<p className={styles.degree}>{edu.degree}</p>
+										{edu.field && <p className={styles.field}>{edu.field}</p>}
+										{edu.year && <p className={styles.year}>{edu.year}</p>}
+									</div>
+								</div>
+							))}
+						</div>
+					</section>
+
 				</div>
 
+				{/* SKILLS ——————————————————————————————————————— */}
 				<aside className={styles.skills}>
 					<h2>Skills</h2>
 					{data.skillGroups.map((group, i) => {

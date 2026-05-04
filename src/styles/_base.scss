@@ -3,11 +3,12 @@
   --text-h: #08060d;
   --bg: #efefef;
   --bg2: #fefefe;
-  --border: #e5e4e7;
+  --border: #dcdce0;
   --code-bg: #f4f3ec;
-  --accent: hsl(252, 50%, 62%);
-  --accent-bg: hsla(250, 50%, 52%, 0.1);
-  --accent-border: hsla(250, 50%, 62%, 0.502);
+  --accent:        hsl(150, 22%, 28%);   /* slate-teal — h2 underlines, sidebar border */
+  --accent-bg:     hsl(150, 18%, 96%);   /* barely-there teal-white tint */
+  --accent-border: hsl(150, 14%, 70%);   /* muted gray-teal — role dividers, skill separators */
+  --accent-faint:  hsl(150, 10%, 86%);   /* whisper — keytech item borders */
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
@@ -33,16 +34,16 @@
 
 @media screen and (prefers-color-scheme: dark) {
   :root {
-
-    --text: #efefef;
-    --text-h: #ffff;
+    --text: #c8c4d0;
+    --text-h: #edeaf4;
     --bg: #1b1b1b;
-    --bg2: #0b0b0b;
-    --border: #2e303a;
+    --bg2: #0f0e12;
+    --border: #2a2830;
     --code-bg: #1f2028;
-  --accent: hsl(225, 50%, 50%);
-    --accent-bg: hsla(225, 95%, 75%, 0.15);
-    --accent-border: hsla(225, 75%, 50%, 0.25);
+    --accent:        hsl(150, 12%, 40%);   /* dark slate-teal — restrained on dark bg */
+    --accent-bg:     hsl(150, 10%, 12%);   /* very dark teal tint */
+    --accent-border: hsl(150, 10%, 22%);   /* deep muted teal separator */
+    --accent-faint:  hsl(150,  8%, 20%);   /* whisper — keytech item borders */
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -57,8 +58,12 @@
   :root {
     --bg: #fff;
     --bg2: #fff;
-    --text: #1b1b1b;
-    --text-h: #1b1b1b;
+    --text: #2a2a2a;
+    --text-h: #111;
+    --accent:        #b0b0b0;   /* light gray — h2 underlines, aside border */
+    --accent-bg:     #f0f0f0;   /* barely-there fill */
+    --accent-border: #c4c4c4;   /* light gray — role dividers, skill separators */
+    --accent-faint:  #e2e2e2;   /* whisper — keytech item borders */
   }
 }
 

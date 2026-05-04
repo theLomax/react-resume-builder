@@ -1,9 +1,42 @@
+@page {
+	size: letter portrait;
+	margin: 0.5in 0;
+}
+
 @media print {
-	h1 {
-		font-size: 2rem;
+
+	// tighten global spacing for print
+	:root {
+		--entry-gap: 0.75rem;
 	}
+
+	h1 {
+		font-size: 1.75rem;
+		margin-block: 0.1rem;
+	}
+
+	h2 {
+		font-size: 1rem;
+		margin-block: 0.4rem 0.25rem;
+		break-after: avoid;
+	}
+
+	h3 {
+		font-size: 1rem;
+		margin-block: 0 0.15rem;
+		break-after: avoid;
+	}
+
+	p {
+		margin-block: 0.15rem;
+	}
+
 	a {
 		text-decoration: none;
 		color: inherit;
+	}
+
+	li {
+		break-inside: avoid;
 	}
 }

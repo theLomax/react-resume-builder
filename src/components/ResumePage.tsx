@@ -3,9 +3,13 @@ import { useResumeData } from "../hooks/useResumeData";
 import { useIsPrint } from "../hooks/useIsPrint";
 import { ResumePreview } from "./ResumePreview";
 
-export function ResumePage() {
+interface Props {
+	variantId?: string
+}
+
+export function ResumePage({ variantId: propVariantId }: Props = {}) {
 	const [searchParams] = useSearchParams()
-	const variantId = searchParams.get('variant') ?? undefined
+	const variantId = propVariantId ?? searchParams.get('variant') ?? undefined
 	const isPrint = useIsPrint()
 	const { data, isLoading, error } = useResumeData(variantId)
 
