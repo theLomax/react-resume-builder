@@ -7,7 +7,6 @@ export function ResumePage() {
 	const { data, isLoading, error } = useResumeData()
 
 	if(isLoading) return <div>Loading...</div>
-  console.warn(error)
 	if (error) return <div>Error loading resume</div>
 	if (!data) return null
 

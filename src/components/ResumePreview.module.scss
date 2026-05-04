@@ -249,7 +249,29 @@ aside.skills {
 		margin-block-start: 0.25rem;
 			border-block-start: 1px solid var(--accent-bg);
 			li {
-				margin-block: .25rem;
+				margin-block-start: 0.5rem;
+			}
+		}
+		&.hasIcons {
+			ul {
+				li {
+					display: grid;
+					grid-template-areas: "icon label";
+					grid-template-columns: 1.5rem 1fr;
+					align-items: center;
+					gap: .5rem;
+				}
+			}
+		}
+		svg {
+			@media print {
+				// color: currentColor !important;
+			}
+		}
+
+		.invertDark svg {
+			@media screen and (prefers-color-scheme: dark) {
+				filter: invert(1);
 			}
 		}
 	}

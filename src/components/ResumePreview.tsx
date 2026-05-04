@@ -1,4 +1,4 @@
-import type { ResumeData } from "../types/resume"
+import type { ResumeData } from '../types/resume'
 import styles from './ResumePreview.module.scss'
 
 import EmailIcon from '@mui/icons-material/Email'
@@ -6,6 +6,8 @@ import PhoneIcon from '@mui/icons-material/Phone'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import LanguageIcon from '@mui/icons-material/Language'
+import { skillIcons, skillColors, skillInvert } from '../lib/skillIcons'
+import { Fragment, type SVGProps } from 'react'
 
 interface Props {
 	data: ResumeData
@@ -113,7 +115,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 						<h2>Experience</h2>
 						<div className={styles.wrapper}>
 							{data.roles.map((role, i) => (
-								<>
+								<Fragment key={i}>
 									{i > 0 && <hr />}
 									<div className={styles.entry} key={i}>
 										<img></img>
@@ -131,7 +133,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 											))}
 										</ul>
 									</div>
-								</>
+								</Fragment>
 							))}
 						</div>
 					</section>
@@ -139,16 +141,29 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 
 				<aside className={styles.skills}>
 					<h2>Skills</h2>
-					{data.skillGroups.map((group, i) => (
-						<section className={styles.skillGroup} key={i}>
-							<h4>{group.label}</h4>
-							<ul>
-								{group.skills.map((skill, j) => (
-									<li key={j}>{skill}</li>
-								))}
-							</ul>
-						</section>
-					))}
+					{data.skillGroups.map((group, i) => {
+						const hasIcons = group.skills.some(skill => skillIcons[skill.toLowerCase()])
+						const BrazeIcon: FC<SVGProps<SVGElement>> = (props) => <BrazeIconRaw {...props} />
+						return (
+							<section className={[styles.skillGroup, hasIcons && styles.hasIcons].filter(Boolean).join(' ')} key={i}>
+								<h4>{group.label}</h4>
+								<ul>
+									{group.skills.map((skill, j) => {
+										const key = skill.toLowerCase()
+										const Icon = skillIcons[key]
+										const color = skillColors[key]
+										const invert = skillInvert.has(key)
+										return (
+											<li key={j}>
+												<span className={invert ? styles.invertDark : undefined}>{Icon && <Icon color={color} size={27} />}</span>
+												<span>{skill}</span>
+											</li>
+										)
+									})}
+								</ul>
+							</section>
+						)
+					})}
 				</aside>
 
 			</main>
