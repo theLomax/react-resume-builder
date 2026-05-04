@@ -9,7 +9,6 @@ export function useResumeData() {
 		queryFn: async () => {
 
 			const { data: { session } } = await supabase.auth.getSession()
-console.log('session', session)
 
 			// fetch profile —————————————————————————————————————————————
 			const { data: profile, error: profileError } = await supabase
@@ -74,9 +73,6 @@ console.log('session', session)
 			const { data: skillGroupRows, error:skillGroupError } = await supabase
 				.from('skill_groups')
 				.select('*')
-
-
-			console.log('skillGroupRows', skillGroupRows, 'error', skillGroupError)
 
 			if (skillGroupError) throw skillGroupError
 			if (!skillGroupRows) throw Error('No skill groups found')
