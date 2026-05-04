@@ -1,0 +1,5 @@
+.invertDark svg {
+	@media screen and (prefers-color-scheme: dark) {
+		filter: invert(1);
+	}
+}
