@@ -47,4 +47,5 @@ export interface ResumeData {
 	roles: ResumeRole[]
 	education: ResumeEducation[]
 	skillGroups: ResumeSkillGroup[]
+	hideEducation?: boolean
 }

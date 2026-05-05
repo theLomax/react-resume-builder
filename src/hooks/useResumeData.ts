@@ -35,7 +35,7 @@ export function useResumeData(variantId?: string) {
 					.from('variant_profile')
 					.select('*')
 					.eq('variant_id', variantId)
-					.single()
+					.maybeSingle()
 
 				// fetch variant roles ————————————————————————————————————
 				const { data: variantRoles, error: vrError } = await supabase
@@ -66,6 +66,23 @@ export function useResumeData(variantId?: string) {
 
 				if (aiError) throw aiError
 
+				// fetch base action items for roles with no variant override —
+				const rolesWithVariantItems = new Set(
+					(actionItemRows ?? []).map(r => r.role_id)
+				)
+				const rolesNeedingFallback = roleIds.filter(
+					id => !rolesWithVariantItems.has(id)
+				)
+				const { data: baseActionItemRows, error: baiError } = rolesNeedingFallback.length
+					? await supabase
+						.from('action_items')
+						.select('*')
+						.in('role_id', rolesNeedingFallback)
+						.order('display_order')
+					: { data: [], error: null }
+
+				if (baiError) throw baiError
+
 				// fetch variant key tech ——————————————————————————————————
 				const { data: keyTechRows, error: ktError } = await supabase
 					.from('variant_key_tech')
@@ -74,6 +91,23 @@ export function useResumeData(variantId?: string) {
 					.order('display_order')
 
 				if (ktError) throw ktError
+
+				// fetch base key tech for roles with no variant override ————
+				const rolesWithVariantKeyTech = new Set(
+					(keyTechRows ?? []).map(r => r.role_id)
+				)
+				const rolesNeedingKeyTechFallback = roleIds.filter(
+					id => !rolesWithVariantKeyTech.has(id)
+				)
+				const { data: baseKeyTechRows, error: bktError } = rolesNeedingKeyTechFallback.length
+					? await supabase
+						.from('role_key_tech')
+						.select('*')
+						.in('role_id', rolesNeedingKeyTechFallback)
+						.order('display_order')
+					: { data: [], error: null }
+
+				if (bktError) throw bktError
 
 				// fetch variant skill groups ——————————————————————————————
 				const { data: variantSkillGroups, error: vsgError } = await supabase
@@ -126,6 +160,7 @@ export function useResumeData(variantId?: string) {
 						subtitle: variantProfile?.subtitle ?? undefined,
 					},
 					summary: variantProfile?.summary ?? [],
+					hideEducation: variantProfile?.hide_education ?? false,
 					roles: variantRoles.map(vr => {
 						const role = rolesRows?.find(r => r.id === vr.role_id)!
 						return {
@@ -141,12 +176,12 @@ export function useResumeData(variantId?: string) {
 							city: role.city ?? undefined,
 							state: role.state ?? undefined,
 							industry: role.industry ?? undefined,
-							keyTech: (keyTechRows ?? [])
-								.filter(kt => kt.role_id === role.id)
-								.map(kt => kt.name),
-							actionItems: (actionItemRows ?? [])
-								.filter(item => item.role_id === role.id)
-								.map(item => item.text),
+							keyTech: (keyTechRows ?? []).some(kt => kt.role_id === role.id)
+								? (keyTechRows ?? []).filter(kt => kt.role_id === role.id).map(kt => kt.name)
+								: (baseKeyTechRows ?? []).filter(kt => kt.role_id === role.id).map(kt => kt.name),
+							actionItems: (actionItemRows ?? []).some(item => item.role_id === role.id)
+								? (actionItemRows ?? []).filter(item => item.role_id === role.id).map(item => item.text)
+								: (baseActionItemRows ?? []).filter(item => item.role_id === role.id).map(item => item.default_text),
 							showKeyTech: vr.show_key_tech ?? undefined,
 						}
 					}),

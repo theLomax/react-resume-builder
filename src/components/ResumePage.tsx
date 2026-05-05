@@ -13,8 +13,8 @@ export function ResumePage({ variantId: propVariantId }: Props = {}) {
 	const isPrint = useIsPrint()
 	const { data, isLoading, error } = useResumeData(variantId)
 
-	if(isLoading) return <div>Loading...</div>
-	if (error) return <div>Error loading resume</div>
+	if (isLoading) return <div>Loading...</div>
+	if (error) return <div>Error loading resume: {(error as Error).message}</div>
 	if (!data) return null
 
 	return <ResumePreview data={data} isPrint={isPrint} />

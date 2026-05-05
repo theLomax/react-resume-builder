@@ -28,7 +28,7 @@ export const companyIcons: Record<string, AnyIcon> = {
 
 export const companyLogos: Record<string, string> = {
 	'united sports officials':        usoLogo,
-	'independent work':               indyLogo,
+	'solo engineering':               indyLogo,
 	'abelsontaylor':                  atgLogo,
 	'michaels stores':                michaelsLogo,
 	'southwestern college':           sckansLogo,

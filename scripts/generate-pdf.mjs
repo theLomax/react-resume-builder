@@ -2,52 +2,114 @@
  * Generate a PDF of the resume using Puppeteer.
  *
  * Usage:
- *   pnpm pdf                             # default variant → exports/cv.pdf
- *   pnpm pdf --company=netflix           # focused variant → exports/focused/netflix/resume.pdf
- *   pnpm pdf --variant=some-id           # any variant by ID → exports/focused/some-id/resume.pdf
- *   pnpm pdf --company=stripe --variant=stripe-2025
+ *   pnpm pdf                 # default CV → exports/James-Lomax--Resume.pdf
+ *   pnpm pdf flock-01        # variant (bare)
+ *   pnpm pdf --flock-01      # variant (dashed — both forms work)
+ *
+ * Variant slugs are short keys (e.g. flock-01, stripe-02). Company folder
+ * and filename title are resolved from react-resume-data/variants.json —
+ * add an entry there whenever you create a new variant SQL file.
+ *
+ * Override flags (all optional):
+ *   --name=James-Lomax        Your name in the filename (default: James-Lomax)
+ *   --title=Some-Role         Override the title from the manifest
+ *   --company=some-co         Override the company folder
+ *   --variant=some-id         Explicit variant ID (alternative to positional arg)
  *
  * Requires the dev server to be running: pnpm dev
  */
 
 import puppeteer from 'puppeteer'
-import { resolve, dirname } from 'path'
-import { mkdirSync } from 'fs'
+import { resolve, dirname, join } from 'path'
+import { mkdirSync, readFileSync, existsSync } from 'fs'
+import { fileURLToPath } from 'url'
 
-const args = Object.fromEntries(
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+// ── Parse args ───────────────────────────────────────────────────────────────
+
+// Args with '=' are named flags (--company=x); args without '=' are variant IDs,
+// whether written as a bare word (flock-01) or with dashes (--flock-01).
+const positional = process.argv.slice(2)
+	.find(a => !a.includes('=') && (a.startsWith('--') ? (a.slice(2)) : a))
+	?.replace(/^--/, '') ?? null
+
+const flags = Object.fromEntries(
 	process.argv.slice(2)
-		.filter(a => a.startsWith('--'))
-		.map(a => a.slice(2).split('='))
+		.filter(a => a.includes('='))
+		.map(a => a.replace(/^--/, '').split('='))
 )
 
-const company  = args.company  ?? null
-const variant  = args.variant  ?? null
+const variantId = flags.variant ?? positional ?? null
+const name      = flags.name ?? 'James-Lomax'
 
-// URL: /cv for default, /?variant=<id> for specific variants
-const url = variant
-	? `http://localhost:5173/?variant=${variant}`
+// ── Load manifest ────────────────────────────────────────────────────────────
+
+const manifestPath = resolve(__dirname, '../../react-resume-data/variants.json')
+const manifest = existsSync(manifestPath)
+	? JSON.parse(readFileSync(manifestPath, 'utf8'))
+	: {}
+
+const entry = variantId ? (manifest[variantId] ?? {}) : {}
+
+// ── Resolve config ───────────────────────────────────────────────────────────
+
+// Company: flag → manifest entry → null
+const company = flags.company ?? entry.company ?? null
+
+// Title: flag → manifest entry → null
+const rawTitle = flags.title ?? entry.title ?? null
+const title = rawTitle?.trim().replace(/\s+/g, '-') ?? null
+
+// ── Build URL and output path ─────────────────────────────────────────────────
+
+const url = variantId
+	? `http://localhost:5173/?variant=${variantId}`
 	: `http://localhost:5173/cv`
 
-// Output path mirrors the old dist/ structure
+const filename = title
+	? `${name}--${title}.pdf`
+	: `${name}--Resume.pdf`
+
 let outPath
 if (company) {
-	outPath = resolve(`./exports/focused/${company}/resume.pdf`)
-} else if (variant) {
-	outPath = resolve(`./exports/focused/${variant}/resume.pdf`)
+	outPath = resolve(`./exports/focused/${company}/${filename}`)
+} else if (variantId) {
+	outPath = resolve(`./exports/focused/${variantId}/${filename}`)
 } else {
-	outPath = resolve('./exports/cv.pdf')
+	outPath = resolve(`./exports/${filename}`)
 }
 
 mkdirSync(dirname(outPath), { recursive: true })
 
-console.log(`Generating PDF from ${url}`)
-console.log(`Output: ${outPath}`)
+// ── Generate ──────────────────────────────────────────────────────────────────
+
+console.log(`Variant:  ${variantId ?? '(default)'}`)
+console.log(`URL:      ${url}`)
+console.log(`Output:   ${outPath}`)
 
 const browser = await puppeteer.launch({ headless: true })
 const page = await browser.newPage()
 
 await page.goto(url, { waitUntil: 'networkidle0' })
-await new Promise(r => setTimeout(r, 500))
+
+// Wait for React loading state to resolve, then confirm data rendered
+await page.waitForFunction(
+	() => !document.body.innerText.includes('Loading...'),
+	{ timeout: 20000 }
+)
+
+try {
+	await page.waitForSelector('header h1', { timeout: 10000 })
+} catch {
+	const bodyText = await page.evaluate(() => document.body.innerText.slice(0, 500))
+	console.error('\n⚠ Page did not render resume content. Page text:\n', bodyText, '\n')
+	await browser.close()
+	process.exit(1)
+}
+
+// Settle for images and web fonts
+await new Promise(r => setTimeout(r, 800))
 
 await page.pdf({
 	path: outPath,

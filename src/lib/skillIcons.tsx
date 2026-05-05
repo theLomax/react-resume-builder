@@ -116,8 +116,4 @@ export const skillColors: Record<string, string> = {
 	'rest api':               '#6DB33F',
 }
 
-export const skillInvert = new Set([
-	'github',
-	'expo go',
-	'express.js',
-])
+// Invert behaviour moved to iconThemeConfig — see src/lib/iconThemeConfig.ts
