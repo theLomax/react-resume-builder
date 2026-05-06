@@ -1,0 +1,51 @@
+// ── Portfolio template styles ──────────────────────────────────────────────────
+// Layer 2 in the cascade: applies to all .portfolio-page routes.
+// Resets resume-specific global rules; defines portfolio-context defaults.
+// Page-specific overrides go in each page's CSS Module.
+
+.portfolio-page {
+
+
+	// Reset the resume-optimised section chrome
+	section {
+		border: none;
+		border-block-end: 1px solid var(--accent-border);
+		border-radius: 0;
+		padding: 0 0 3rem 0;
+		margin-inline: 0;
+		margin-block-start: 0;
+
+		@media print {
+			border: none;
+			padding: 0;
+		}
+	}
+
+	// Prose headings — lighter weight than resume h2
+	h2 {
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--accent);
+		border-block-end: none;
+		padding-block: 0;
+		margin: 0;
+	}
+
+	// Prose paragraphs — comfortable reading measure
+	p {
+		color: var(--text);
+		text-wrap: pretty;
+	}
+
+	// Inline code in prose — scoped to avoid colliding with syntax highlighter blocks
+	p code,
+	li code {
+		font-size: 0.85em;
+		padding: 0.15em 0.4em;
+		border-radius: 3px;
+		background: var(--code-bg);
+		color: var(--text-h);
+	}
+}

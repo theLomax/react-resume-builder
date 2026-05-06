@@ -1,0 +1,12 @@
+:root {
+	--gutter: 1.5rem;
+}
+
+.layout {
+	width: 100%;
+	max-width: 960px;
+	margin-inline: auto;
+	padding: 3rem 0 5rem;
+	box-sizing: border-box;
+	min-height: 100svh;
+}

@@ -1,12 +1,18 @@
 import { useQuery } from "@tanstack/react-query"
 import { supabase } from "../lib/supabase"
 import type { ResumeData } from "../types/resume"
+import cvStatic from "../data/cv-static.json"
 
 export function useResumeData(variantId?: string) {
 	return useQuery<ResumeData>({
 		queryKey: ['resume', variantId ?? 'base'],
 		staleTime: 0,
 		queryFn: async () => {
+
+			// ── Production: return pre-fetched static data, no Supabase call ──
+			if (import.meta.env.PROD) {
+				return cvStatic as unknown as ResumeData
+			}
 
 			// fetch profile —————————————————————————————————————————————
 			const { data: profile, error: profileError } = await supabase

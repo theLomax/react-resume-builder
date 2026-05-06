@@ -1,0 +1,258 @@
+@use 'sass:math';
+
+:root {
+	--col-gap: 1rem;
+}
+
+.breadcrumb {
+	margin-block-end: 2rem;
+}
+
+.back {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	font-size: 0.85rem;
+	color: var(--text);
+	opacity: 0.6;
+	text-decoration: none;
+	transition: opacity 0.15s ease;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+// ── Project header ─────────────────────────────────────────────────────────────
+
+.header {
+	margin-block-end: 3rem;
+	padding-block-end: 2rem;
+	padding-inline: var(--gutter);
+	border-block-end: 1px solid var(--accent-border);
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+
+.subtitle {
+	font-size: 0.9rem;
+	font-style: italic;
+	color: var(--text);
+	opacity: 0.65;
+	margin-block: 0 1.25rem;
+	text-box-trim: trim-start;
+}
+
+
+		figure {
+			max-width: 512px;
+			filter: drop-shadow(-1px 1px 0 #0003);
+		}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.3rem 0.4rem;
+	list-style: none;
+	padding: 0;
+	margin: 0 0 .5rem;
+
+	li {
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		padding: 0.2rem 0.6rem;
+		border-radius: 2rem;
+		border: 1px solid var(--accent-faint);
+		background: var(--accent-bg);
+		font-style: italic;
+	}
+}
+
+.links {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: fit-content;
+	gap: 0.75rem;
+}
+
+.linkBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.85rem;
+	padding: 0.4rem 0.9rem;
+	border-radius: 2rem;
+	border: 1px solid var(--accent-border);
+	background: var(--bg2);
+	color: var(--text);
+	text-decoration: none;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+	&:hover {
+		border-color: var(--accent);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+	}
+}
+
+// ── Content layout ─────────────────────────────────────────────────────────────
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem var(--col-gap);
+}
+
+// ── Section groups ─────────────────────────────────────────────────────────────
+// type: 'section' — groups related blocks, renders as <section>
+
+.group {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	width: 100%;
+
+	> h2 {
+		margin-block: 0 0.25rem;
+	}
+}
+
+// ── Individual blocks ──────────────────────────────────────────────────────────
+// type: 'text' | 'code' | 'image' — render as <div>; heading is h2 standalone, h3 inside group
+
+.textBlock,
+.codeBlock,
+.imageBlock {
+	&:not(.stacked &) {
+		justify-items: center;
+		margin-inline: var(--gutter);
+		margin-block-end: var(--gutter);
+	}
+	h2, h3 {
+		margin-block: 0 0.75rem;
+	}
+}
+
+.textBlock {
+	p {
+		font-size: 1rem;
+		line-height: 1.75;
+		max-width: 72ch;
+		color: var(--text);
+	}
+}
+
+// Utility classes — apply via className field in data (e.g. className: 'half left')
+.flexWrap {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	> h2 {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+.flex {
+	&-half,
+	&-3rds,
+	&-5ths {	
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		column-gap: var(--col-gap);
+		@media (width <= 799px) {
+			flex-direction: column;
+		}
+	}
+	&-3rds {
+		> :first-child  { flex: 1 1 0; }
+		> :last-child   { flex: 2 1 0; }
+		&.flip {
+		> :first-child  { flex: 2 1 0; }
+		> :last-child   { flex: 1 1 0; }
+		}
+	}
+	&-5ths {
+		> :first-child  { flex: 2 1 0; }  // 2/5
+		> :last-child   { flex: 3 1 0; }  // 3/5
+		&.flip {
+		> :first-child  { flex: 3 1 0; }
+		> :last-child   { flex: 2 1 0; }
+		}
+	}
+	
+	&-half {
+		gap: var(--col-gap);
+		> * {
+				flex: 1 1 0; min-width: 0;
+				width: 500px;
+				max-width: calc(100% - (var(--gutter) * 2));
+		}
+	}
+}
+
+.rev-r {
+  @media (width > 799px) {
+    flex-direction: row-reverse;
+  }
+}
+
+.full {
+	width: calc(100% - (var(--gutter) * 2));
+}
+
+.stacked {
+	margin-inline: var(--gutter);
+	--overlap: 8%; // how much each card slides behind the previous
+	--y-step: 6%; // vertical drop per card
+
+	@media (width < 600px) {
+		--overlap: 50%;
+		--y-step: 35%;
+	}
+
+	display: flex;
+	align-items: flex-start;
+
+	>*+* {
+		margin-inline-start: calc( -1 * var(--overlap));
+	}
+
+	@for $j from 2 through 5 {
+		>*:nth-child(#{$j}) {
+			margin-block-start: calc(#{$j - 1 }* var(--y-step));
+		}
+	}
+}
+// ── Image sections ─────────────────────────────────────────────────────────────
+
+.figure {
+	margin: 0;
+	border-radius: 0.5rem;
+	overflow: hidden;
+	border: 1px solid var(--accent-border);
+	width: fit-content;
+	max-width: 800px;
+	margin-inline: auto;
+	border-radius: 1rem 1.75rem;
+	corner-shape: bevel;
+
+	img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	figcaption {
+		padding: 0.5rem 1rem;
+		font-size: 0.8rem;
+		color: var(--text);
+		opacity: 0.6;
+		background: var(--accent-bg);
+		border-block-start: 1px solid var(--accent-faint);
+	}
+}

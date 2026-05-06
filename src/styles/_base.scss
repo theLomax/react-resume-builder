@@ -3,13 +3,16 @@
   --text-h: #08060d;
   --skill-text: #4b4b4b;
   --bg: #efefef;
-  --bg2: #fefefe;
+  --bg2: #fdfdfd;
   --border: #dcdce0;
   --code-bg: #f4f3ec;
-  --accent:        hsl(150, 22%, 28%);   /* slate-teal — h2 underlines, sidebar border */
-  --accent-bg:     hsl(150, 18%, 96%);   /* barely-there teal-white tint */
-  --accent-border: hsl(150, 14%, 70%);   /* muted gray-teal — role dividers, skill separators */
-  --accent-faint:  hsl(150, 10%, 86%);   /* whisper — keytech item borders */
+  --code-window: #ccc;
+  --lang-overlay: #00000014;
+  --accent:        hsl(155, 65%, 32%);   /* saturated teal — portfolio CTAs, nav, interactive */
+  --accent-muted:  hsl(150, 22%, 28%);   /* slate-teal — CV h2 underlines, sidebar border */
+  --accent-bg:     hsl(from var(--accent-muted) h calc(s * 0.82) 96%);  /* barely-there tint */
+  --accent-border: hsl(from var(--accent-muted) h calc(s * 0.64) 70%);  /* role dividers, separators */
+  --accent-faint:  hsl(from var(--accent-muted) h calc(s * 0.45) 86%);  /* whisper — keytech borders */
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
@@ -35,17 +38,20 @@
 
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --text: hsl(260, 11%, 79%);
+    --text: #c7c4cf;
     --text-h: #edeaf4;
-    --skill-text: hsl(260, 10%, 75%);
-    --bg: #1b1b1b;
-    --bg2: #0f0e12;
+    --skill-text: #bdb9c6;
+    --bg: #171717;
+    --bg2: #0a0a0a;
     --border: #2a2830;
     --code-bg: #1f2028;
-    --accent:        hsl(150, 12%, 40%);   /* dark slate-teal — restrained on dark bg */
-    --accent-bg:     hsl(150, 10%, 12%);   /* very dark teal tint */
-    --accent-border: hsl(150, 10%, 22%);   /* deep muted teal separator */
-    --accent-faint:  hsl(150,  8%, 20%);   /* whisper — keytech item borders */
+    --code-window: #1e1e1e;
+    --lang-overlay: #ffffff14;
+    --accent:        hsl(155, 52%, 60%);   /* saturated teal — brighter for dark bg visibility */
+    --accent-muted:  hsl(150, 12%, 40%);   /* dark slate-teal — restrained on dark bg */
+    --accent-bg:     hsl(from var(--accent-muted) h calc(s * 0.83) 12%);  /* very dark teal tint */
+    --accent-border: hsl(from var(--accent-muted) h calc(s * 0.83) 22%);  /* deep muted separator */
+    --accent-faint:  hsl(from var(--accent-muted) h calc(s * 0.67) 20%);  /* whisper */
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -63,11 +69,16 @@
     --text: #2a2a2a;
     --text-h: #111;
     --skill-text: #444;
-    --accent:        #b0b0b0;   /* light gray — h2 underlines, aside border */
+    --accent:        #999;       /* print links/interactive — slightly darker gray */
+    --accent-muted:  #b0b0b0;   /* light gray — h2 underlines, aside border */
     --accent-bg:     #f0f0f0;   /* barely-there fill */
     --accent-border: #c4c4c4;   /* light gray — role dividers, skill separators */
     --accent-faint:  #e2e2e2;   /* whisper — keytech item borders */
   }
+}
+
+html {
+  scrollbar-gutter: stable;
 }
 
 #root {
@@ -84,6 +95,12 @@
 
 body {
   margin: 0;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1,
@@ -104,6 +121,7 @@ h1 {
   padding: 0;
   margin-block: .75rem .25rem;
   margin-inline: 0;
+  letter-spacing: -0.5px;
   // @media (max-width: 1024px) {
   //   font-size: 36px;
   //   margin: 20px 0;
@@ -115,7 +133,7 @@ h2 {
   letter-spacing: -0.24px;
   margin: 0 0 .5rem;
   padding-block: 0.25rem 0.5rem;
-  border-block-end: 1px solid var(--accent);
+  border-block-end: 1px solid var(--accent-muted);
 }
 
 h3 {
@@ -145,12 +163,13 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+  display: inline-block;
 }
 
 section {
   text-align: left;
   margin-block-start: 1rem;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--accent-muted);
   margin-inline: 1rem;
   border-radius: 0.5rem 1.5rem .5rem .75rem;
   corner-shape: bevel;
