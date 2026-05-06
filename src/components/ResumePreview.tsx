@@ -72,7 +72,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 	const lastSoloKT     = computeLastKeytechIndex(soloRoles)
 
 	return (
-		<>
+		<div className={styles.resume}>
 			{/* HEADER ——————————————————————————————————————— */}
 			<header>
 				<h1>
@@ -85,7 +85,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 						</span>
 						{data.profile.subtitle?.length
 						? <>
-								<span className='hide-mobile'>  ·  </span>
+								<span className={styles.hideMobile}>  ·  </span>
 								{data.profile.subtitle.map((row, i) => (
 									<span key={i}>{row}</span>
 								))}
@@ -283,6 +283,6 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 
 			</main>
 
-		</>
+		</div>
 	)
 }

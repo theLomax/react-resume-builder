@@ -4,215 +4,225 @@
 	--icon-size-print: 65px;
 }
 
-header {
-	display: grid;
-	grid-template-columns: 200px 1fr;
-	grid-template-areas:
-		"aside bravo"
-		"aside echo";
-	@media (width <= 600px), print {
+.resume {
+	@media screen {
+		margin-block-start: 3rem;
+	}
+	header {
+		display: grid;
+		grid-template-columns: 200px 1fr;
 		grid-template-areas:
-			"bravo"
-			"echo";
-		grid-template-columns: 1fr;
+			"aside bravo"
+			"aside echo";
+		@media (width <= 600px), print {
+			grid-template-areas:
+				"bravo"
+				"echo";
+			grid-template-columns: 1fr;
+		}
+		h1 {
+			grid-area: bravo;
+		}
+		hgroup {
+			grid-area: echo;
+		}
 	}
-	h1 {
-		grid-area: bravo;
-	}
+
 	hgroup {
-		grid-area: echo;
-	}
-}
-
-hgroup {
-	span {
-		display: inline-block;
-		white-space: pre-wrap;
-
-		&:nth-child(n+4) {
-			display: block;
-		}
-		@media screen and (width < 600px) {
-			display: block;
-		}
-	}
-}
-
-main {
-	display: grid;
-	grid-template-areas:
-		"contact contact"
-		"aside sections";
-	grid-template-columns: 200px 1fr;
-	@media screen and (width <= 600px) {
-		grid-template-areas:
-			"sections"
-			"aside";
-		grid-template-columns: 1fr;
-	}
-
-	section {
-		z-index: 2;
-    background: var(--bg2);
-
-		&.contact {
-			padding-block: 0 1rem;
-			grid-area: contact;
-
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-around;
-				padding-inline: 0;
-
-				li {
-					list-style-type: none;
-					text-box-trim: trim-both;
-					text-box-edge: cap alphabetic;
-					display: flex;
-					gap: .25rem;
-
-					&.location {
-						gap: 0;
-					}
-				}
+		span {
+			display: inline-block;
+			white-space: pre-wrap;
+			&:nth-child(n+4) {
+				display: block;
 			}
-		}
-
-		&.education,
-		&.experience {
-			.wrapper {
-				display: flex;
-			}
-
-			.entry {
-				display: grid;
-				grid-template-columns: var(--icon-size-screen) 1fr;
-				column-gap: 1rem;
-				align-items: center;
-
-				@media print {
-					grid-template-columns: var(--icon-size-print) 1fr;
-				}
-
-				&:first-of-type {
-					margin-top: .5rem;
-				}
-
-				img, svg {
-					grid-area: img;
-					aspect-ratio: 1 / 1;
-					align-self: start;
-					width: var(--icon-size-screen);
-					height: var(--icon-size-screen);
-					@media print {
-						width: var(--icon-size-print);
-						height: var(--icon-size-print);
-					}
-				}
-
-				.entryContent {
-					grid-area: content;
-				}
-
-				.location,
-				.industry {
+			@media screen and (width < 600px) {
+					display: block;
+				&.hideMobile {
 					display: none;
 				}
 			}
 		}
+	}
 
-		&.education {
-			.wrapper {
-				flex-wrap: wrap;
-				gap: calc(var(--entry-gap)/4) 1rem;
-			}
-
-			.entry {
-				flex: 1 300px;
-				grid-template-areas: "img content";
-				align-items: center;
-				align-content: center;
-			}
+	main {
+		display: grid;
+		grid-template-areas:
+			"contact contact"
+			"aside sections";
+		grid-template-columns: 200px 1fr;
+		@media screen and (width <= 600px) {
+			grid-template-areas:
+				"sections"
+				"aside";
+			grid-template-columns: 1fr;
 		}
 
-		&.experience {
-			.wrapper {
-				flex-wrap: wrap;
-				gap: calc(var(--entry-gap)/2) 1rem;
+		section {
+			z-index: 2;
+			@media screen {
+				padding-block-end: 1.5rem;
+				background: var(--bg2);
 			}
 
-			.keytech {
-				grid-area: tech;
-				display: flex;
-				flex-wrap: wrap;
-				flex-direction: row;
-				justify-content: space-around;
-				text-wrap: balance;
-				column-gap: .25rem;
-				justify-content: space-evenly;
-				font-style: italic;
-				margin-block-start: .5rem;
-				padding-block: 0;
-				line-height: 1.5;
-				border-block: 1px solid var(--accent-faint);
-				&.empty {
-					border-block-end: none;
-				}
-				li {
-					border-radius: 3px;
-					padding-inline: 0.35rem;
-				}
-			}
+			&.contact {
+				padding-block: 0 1rem;
+				grid-area: contact;
 
-			.desc {
-				grid-area: desc;
-				list-style-type: '· ';
-				padding-inline-start: .75rem;
-				margin-block-start: .5rem;
-				li:not(:last-of-type) {
-					margin-block-end: .33rem;
+				ul {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-around;
+					padding-inline: 0;
+
+					li {
+						list-style-type: none;
+						text-box-trim: trim-both;
+						text-box-edge: cap alphabetic;
+						display: flex;
+						gap: .25rem;
+
+						&.location {
+							gap: 0;
+						}
+					}
 				}
 			}
 
-			hr {
-				width: 65%;
-				margin-inline: auto;
-				color: var(--accent-border);
+			&.education,
+			&.experience {
+				.wrapper {
+					display: flex;
+				}
 
-				&.hrSameCompany {
-					width: 40%;
-					opacity: 0.4;
-					margin-inline-start: 80px; // align with content column, skip logo gutter
+				.entry {
+					display: grid;
+					grid-template-columns: var(--icon-size-screen) 1fr;
+					column-gap: 1rem;
+					align-items: center;
+
+					@media print {
+						grid-template-columns: var(--icon-size-print) 1fr;
+					}
+
+					&:first-of-type {
+						margin-top: .5rem;
+					}
+
+					img, svg {
+						grid-area: img;
+						aspect-ratio: 1 / 1;
+						align-self: start;
+						width: var(--icon-size-screen);
+						height: var(--icon-size-screen);
+						@media print {
+							width: var(--icon-size-print);
+							height: var(--icon-size-print);
+						}
+					}
+
+					.entryContent {
+						grid-area: content;
+					}
+
+					.location,
+					.industry {
+						display: none;
+					}
 				}
 			}
 
-			.entry {
-				flex: 100%;
-				grid-template-areas:
-					"img content"
-					"tech tech"
-					"desc desc";
+			&.education {
+				.wrapper {
+					flex-wrap: wrap;
+					gap: calc(var(--entry-gap)/4) 1rem;
+				}
 
-				&.sameCompany {
+				.entry {
+					flex: 1 300px;
+					grid-template-areas: "img content";
+					align-items: center;
+					align-content: center;
+				}
+			}
+
+			&.experience {
+				.wrapper {
+					flex-wrap: wrap;
+					gap: calc(var(--entry-gap)/2) 1rem;
+				}
+
+				.keytech {
+					grid-area: tech;
+					display: flex;
+					flex-wrap: wrap;
+					flex-direction: row;
+					justify-content: space-around;
+					text-wrap: balance;
+					column-gap: .25rem;
+					justify-content: space-evenly;
+					font-style: italic;
+					margin-block-start: .5rem;
+					padding-block: 0;
+					line-height: 1.5;
+					border-block: 1px solid var(--accent-faint);
+					&.empty {
+						border-block-end: none;
+					}
+					li {
+						border-radius: 3px;
+						padding-inline: 0.35rem;
+					}
+				}
+
+				.desc {
+					grid-area: desc;
+					list-style-type: '· ';
+					padding-inline-start: .75rem;
+					margin-block-start: .5rem;
+					li:not(:last-of-type) {
+						margin-block-end: .33rem;
+					}
+				}
+
+				hr {
+					width: 65%;
+					margin-inline: auto;
+					color: var(--accent-border);
+
+					&.hrSameCompany {
+						width: 40%;
+						opacity: 0.4;
+						margin-inline-start: 80px; // align with content column, skip logo gutter
+					}
+				}
+
+				.entry {
+					flex: 100%;
 					grid-template-areas:
-						"content content"
+						"img content"
 						"tech tech"
 						"desc desc";
-				}
 
-				h3 + h4 {
-					padding-block-start: .5rem;
+					&.sameCompany {
+						grid-template-areas:
+							"content content"
+							"tech tech"
+							"desc desc";
+					}
+
+					h3 + h4 {
+						padding-block-start: .5rem;
+					}
+
+					@media print {
+						break-inside: avoid;
+					}
 				}
 
 				@media print {
-					break-inside: avoid;
-				}
-			}
-
-			@media print {
-				hr {
-					break-after: avoid;
+					hr {
+						break-after: avoid;
+					}
 				}
 			}
 		}
@@ -223,9 +233,13 @@ main {
 	grid-area: sections;
 	> section {
 		margin-block-end: 2rem;
+		@media screen and (width < 600px) {
+			margin-block-end: 1.25rem;
+		}
 	}
 	@media print {
-		border-inline-start: 1px solid var(--accent);
+		border-inline-start: 1px solid var(--accent-muted);
+		padding-inline-start: .5rem;
 	}
 }
 
@@ -235,10 +249,10 @@ aside {
 		background: var(--bg2);
 		text-align: left;
 		padding-inline: 1rem;
-		padding-top: 7.75rem;
-    margin-top: -6.2rem;
+		padding-block-start: 7.75rem;
+    margin-block-start: -8.5rem;
 		z-index: 1;
-		border-inline: 1px solid var(--accent);
+		border-inline: 1px solid var(--accent-muted);
 		// @media (prefers-color-scheme: dark) {
 		// 	background: #0008;
 		// }
@@ -247,7 +261,7 @@ aside {
 		}
 		@media screen and (width <= 600px) {
 			margin-block-start: 1rem;
-			border: 1px solid var(--accent);
+			border: 1px solid var(--accent-muted);
 			margin-inline: 1rem;
 			border-radius: 0.5rem 1.5rem .5rem .75rem;
 			corner-shape: bevel;

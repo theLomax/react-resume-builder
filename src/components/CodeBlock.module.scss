@@ -1,0 +1,52 @@
+.codeBlock {
+	position: relative;
+	background: var(--code-bg);   // VS Code dark — intentionally fixed, not theme-relative
+	border-radius: 0.5rem 1.5rem;
+	border: 1px solid var(--accent-border);
+	corner-shape: bevel;
+	overflow: hidden;
+	font-family: var(--mono);
+	font-size: 0.85rem;
+	line-height: 1.6;
+	max-width: 100%;
+	width: calc-size(fit-content, size + 2.5rem);
+	border-radius: .75rem 1.25rem .75rem .5rem;
+	corner-shape: bevel;
+	width: 100%;
+}
+
+.lang {
+	display: block;
+	padding: 0.4rem 1.25rem 0.3rem;
+	background: var(--lang-overlay);
+	border-block-end: 1px solid var(--accent-border);
+	color: var(--text);
+	font-size: 0.72rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	border-end-end-radius: 2rem;
+	corner-block-end-shape: bevel;
+	width: calc-size(fit-content, size + 5%);
+	mix-blend-mode: luminosity;
+}
+
+.pre {
+	margin: 0;
+	padding: 1.25rem;
+	overflow-x: auto;
+	color: #d4d4d4;   // VS Code default text
+
+	code {
+		font-family: inherit;
+		font-size: inherit;
+		background: none;
+		padding: 0;
+		color: inherit;
+	}
+}
+
+p {
+	code {
+		border: 1px solid var(--border);
+	}
+}
