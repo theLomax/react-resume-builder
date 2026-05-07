@@ -79,13 +79,11 @@ export function useResumeData(variantId?: string) {
 				const rolesNeedingFallback = roleIds.filter(
 					id => !rolesWithVariantItems.has(id)
 				)
-				const { data: baseActionItemRows, error: baiError } = rolesNeedingFallback.length
-					? await supabase
-						.from('action_items')
-						.select('*')
-						.in('role_id', rolesNeedingFallback)
-						.order('display_order')
-					: { data: [], error: null }
+				const { data: baseActionItemRows, error: baiError } = await supabase
+					.from('action_items')
+					.select('*')
+					.in('role_id', rolesNeedingFallback)
+					.order('display_order')
 
 				if (baiError) throw baiError
 
@@ -105,13 +103,11 @@ export function useResumeData(variantId?: string) {
 				const rolesNeedingKeyTechFallback = roleIds.filter(
 					id => !rolesWithVariantKeyTech.has(id)
 				)
-				const { data: baseKeyTechRows, error: bktError } = rolesNeedingKeyTechFallback.length
-					? await supabase
-						.from('role_key_tech')
-						.select('*')
-						.in('role_id', rolesNeedingKeyTechFallback)
-						.order('display_order')
-					: { data: [], error: null }
+				const { data: baseKeyTechRows, error: bktError } = await supabase
+					.from('role_key_tech')
+					.select('*')
+					.in('role_id', rolesNeedingKeyTechFallback)
+					.order('display_order')
 
 				if (bktError) throw bktError
 
