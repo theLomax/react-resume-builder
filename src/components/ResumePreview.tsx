@@ -230,7 +230,7 @@ export function ResumePreview({ data }: Props) {
 					)}
 
 					{/* EDUCATION ——————————————————————————————————————— */}
-					{!data.hideEducation && (
+					{!data.hideEducation && data.education.length > 0 && (
 						<section id="education" className={styles.education}>
 							<h2>Education</h2>
 							<div className={styles.wrapper}>

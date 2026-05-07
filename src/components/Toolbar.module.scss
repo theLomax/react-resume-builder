@@ -9,11 +9,12 @@
 	gap: 0.5rem;
 
 	@media (width < 600px) {
+		top: .5rem;
+		left: 0;
+		padding-inline: 1.25rem;
+		width: 100%;
 		flex-direction: row-reverse;
-    width: 100%;
-    justify-content: space-between;
-    left: 0;
-    padding-inline: 1.25rem;
+		justify-content: space-between;
 	}
 
 	@media print {

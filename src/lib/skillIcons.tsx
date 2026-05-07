@@ -32,6 +32,7 @@ import AdobeCCIconRaw from '../assets/icons/adobeCC.svg?react'
 import CSharpIconRaw from '../assets/icons/cSharp.svg?react'
 import DotNetIconRaw from '../assets/icons/dotnet.svg?react'
 import GsapIconRaw from '../assets/icons/gsap.svg?react'
+import NextIconRaw from '../assets/icons/next.svg?react'
 
 type AnyIcon = IconType | FC<SVGProps<SVGSVGElement>>
 
@@ -47,8 +48,10 @@ const CSharpIcon	= svgIcon(CSharpIconRaw)
 const DotNetIcon	= svgIcon(DotNetIconRaw)
 const GsapIcon		= svgIcon(GsapIconRaw)
 const RestIcon		= svgIcon(RestIconRaw)
+const NextIcon		= svgIcon(NextIconRaw)
 
 export const skillIcons: Record<string, AnyIcon> = {
+	'next.js':                NextIcon,
 	'braze':                  BrazeIcon,
 	'adobe creative cloud':   AdobeCCIcon,
 	'c#':                     CSharpIcon,
