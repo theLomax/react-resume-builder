@@ -213,6 +213,10 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['variant_skills']['Insert']>
       }
     }
+    Views: Record<string, never>
+    Functions: Record<string, never>
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
 }
 
