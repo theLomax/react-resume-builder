@@ -280,8 +280,8 @@ export function useResumeData(variantId?: string) {
 					email: profile.email,
 					phone: profile.phone ?? undefined,
 					linkedin: profile.linkedin ?? undefined,
-					location: profile.location,
-					site: profile.site,
+					location: profile.location ?? undefined,
+					site: profile.site ?? undefined,
 				},
 				summary: summaryRows.map(row => row.text),
 				roles: rolesRows.map(row => ({
