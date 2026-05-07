@@ -1,0 +1,17 @@
+.invertDark {
+	@media screen and (prefers-color-scheme: dark) {
+		filter: invert(1);
+	}
+}
+
+.invertLight {
+	@media screen and (prefers-color-scheme: light) {
+		filter: invert(1);
+	}
+}
+
+.invertPrint {
+	@media print {
+		filter: invert(1);
+	}
+}
