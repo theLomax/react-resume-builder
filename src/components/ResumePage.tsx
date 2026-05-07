@@ -31,7 +31,7 @@ export function ResumePage({ variantId: propVariantId }: Props = {}) {
 					</button>
 				</Toolbar>
 			)}
-			<ResumePreview data={data} isPrint={isPrint} />
+			<ResumePreview data={data} />
 		</>
 	)
 }

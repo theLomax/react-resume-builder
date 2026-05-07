@@ -55,10 +55,9 @@ function computeLastKeytechIndex(roles: ResumeData['roles']) {
 
 interface Props {
 	data: ResumeData
-	isPrint?: boolean
 }
 
-export function ResumePreview({ data, isPrint = true }: Props) {
+export function ResumePreview({ data }: Props) {
 
 	const condensedUrl = (url: string) =>
 		url.replace(/^https?:\/\/(www\.)?/, '')

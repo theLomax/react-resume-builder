@@ -6,7 +6,7 @@ import cvStatic from "../data/cv-static.json"
 export function useResumeData(variantId?: string) {
 	return useQuery<ResumeData>({
 		queryKey: ['resume', variantId ?? 'base'],
-		staleTime: 0,
+		staleTime: 1000 * 60 * 5, // 5 minutes
 		queryFn: async (): Promise<ResumeData> => {
 
 			// ── Production: return pre-fetched static data, no Supabase call ──
