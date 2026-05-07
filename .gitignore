@@ -31,3 +31,6 @@ exports
 
 # PNPM temp files
 _tmp_*
+
+# Generated at build time from Supabase
+src/data/cv-static.json
