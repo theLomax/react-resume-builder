@@ -1,240 +1,769 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.5"
+  }
   public: {
     Tables: {
-      profiles: {
-        Row: {
-          id: string
-          first_name: string
-          last_name: string
-          email: string
-          phone: string | null
-          site: string | null
-          linkedin: string | null
-          location: string | null
-          created_at: string
-        }
-        Insert: Omit<Database['public']['Tables']['profiles']['Row'], 'id' | 'created_at'>
-        Update: Partial<Database['public']['Tables']['profiles']['Insert']>
-      }
-      profile_summary: {
-        Row: {
-          id: string
-          profile_id: string
-          text: string
-          order: number
-        }
-        Insert: Omit<Database['public']['Tables']['profile_summary']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['profile_summary']['Insert']>
-      }
-      education: {
-        Row: {
-          id: string
-          profile_id: string
-          institution: string
-          degree: string
-          field: string | null
-          year: string | null
-        }
-        Insert: Omit<Database['public']['Tables']['education']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['education']['Insert']>
-      }
-      tags: {
-        Row: {
-          id: string
-          name: string
-        }
-        Insert: Omit<Database['public']['Tables']['tags']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['tags']['Insert']>
-      }
-      roles: {
-        Row: {
-          id: string
-          profile_id: string
-          company: string
-          company_em: string | null
-          title: string
-          title_em: string | null
-          start_year: string
-          start_month: string | null
-          end_year: string
-          end_month: string | null
-          city: string | null
-          state: string | null
-          industry: string | null
-          display_order: number
-        }
-        Insert: Database['public']['Tables']['roles']['Row']
-        Update: Partial<Database['public']['Tables']['roles']['Insert']>
-      }
-      role_key_tech: {
-        Row: {
-          id: string
-          role_id: string
-          name: string
-          display_order: number
-        }
-        Insert: Omit<Database['public']['Tables']['role_key_tech']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['role_key_tech']['Insert']>
-      }
-      action_items: {
-        Row: {
-          id: string
-          role_id: string
-          default_text: string
-          key_experience_text: string | null
-          is_key_experience: boolean
-          weight: number
-          display_order: number
-        }
-        Insert: Database['public']['Tables']['action_items']['Row']
-        Update: Partial<Database['public']['Tables']['action_items']['Insert']>
-      }
-      action_item_variants: {
-        Row: {
-          id: string
-          action_item_id: string
-          audience: string
-          text: string
-        }
-        Insert: Omit<Database['public']['Tables']['action_item_variants']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['action_item_variants']['Insert']>
-      }
       action_item_tags: {
         Row: {
           action_item_id: string
           tag_id: string
         }
-        Insert: Database['public']['Tables']['action_item_tags']['Row']
-        Update: Partial<Database['public']['Tables']['action_item_tags']['Insert']>
+        Insert: {
+          action_item_id: string
+          tag_id: string
+        }
+        Update: {
+          action_item_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "action_item_tags_action_item_id_fkey"
+            columns: ["action_item_id"]
+            isOneToOne: false
+            referencedRelation: "action_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "action_item_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      action_item_variants: {
+        Row: {
+          action_item_id: string
+          audience: string
+          id: string
+          text: string
+        }
+        Insert: {
+          action_item_id: string
+          audience: string
+          id?: string
+          text: string
+        }
+        Update: {
+          action_item_id?: string
+          audience?: string
+          id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "action_item_variants_action_item_id_fkey"
+            columns: ["action_item_id"]
+            isOneToOne: false
+            referencedRelation: "action_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      action_items: {
+        Row: {
+          default_text: string
+          display_order: number
+          id: string
+          is_key_experience: boolean
+          key_experience_text: string | null
+          role_id: string
+          weight: number
+        }
+        Insert: {
+          default_text: string
+          display_order: number
+          id: string
+          is_key_experience?: boolean
+          key_experience_text?: string | null
+          role_id: string
+          weight?: number
+        }
+        Update: {
+          default_text?: string
+          display_order?: number
+          id?: string
+          is_key_experience?: boolean
+          key_experience_text?: string | null
+          role_id?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "action_items_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      education: {
+        Row: {
+          degree: string
+          field: string | null
+          id: string
+          institution: string
+          profile_id: string
+          year: string | null
+        }
+        Insert: {
+          degree: string
+          field?: string | null
+          id?: string
+          institution: string
+          profile_id: string
+          year?: string | null
+        }
+        Update: {
+          degree?: string
+          field?: string | null
+          id?: string
+          institution?: string
+          profile_id?: string
+          year?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "education_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profile_summary: {
+        Row: {
+          id: string
+          order: number
+          profile_id: string
+          text: string
+        }
+        Insert: {
+          id?: string
+          order: number
+          profile_id: string
+          text: string
+        }
+        Update: {
+          id?: string
+          order?: number
+          profile_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_summary_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          linkedin: string | null
+          location: string | null
+          phone: string | null
+          site: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          linkedin?: string | null
+          location?: string | null
+          phone?: string | null
+          site?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          linkedin?: string | null
+          location?: string | null
+          phone?: string | null
+          site?: string | null
+        }
+        Relationships: []
+      }
+      role_key_tech: {
+        Row: {
+          display_order: number
+          id: string
+          name: string
+          role_id: string
+        }
+        Insert: {
+          display_order: number
+          id?: string
+          name: string
+          role_id: string
+        }
+        Update: {
+          display_order?: number
+          id?: string
+          name?: string
+          role_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "role_key_tech_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roles: {
+        Row: {
+          city: string | null
+          company: string
+          company_em: string | null
+          display_order: number
+          end_month: string | null
+          end_year: string
+          id: string
+          industry: string | null
+          profile_id: string
+          start_month: string | null
+          start_year: string
+          state: string | null
+          title: string
+          title_em: string | null
+        }
+        Insert: {
+          city?: string | null
+          company: string
+          company_em?: string | null
+          display_order: number
+          end_month?: string | null
+          end_year: string
+          id: string
+          industry?: string | null
+          profile_id: string
+          start_month?: string | null
+          start_year: string
+          state?: string | null
+          title: string
+          title_em?: string | null
+        }
+        Update: {
+          city?: string | null
+          company?: string
+          company_em?: string | null
+          display_order?: number
+          end_month?: string | null
+          end_year?: string
+          id?: string
+          industry?: string | null
+          profile_id?: string
+          start_month?: string | null
+          start_year?: string
+          state?: string | null
+          title?: string
+          title_em?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roles_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       skill_groups: {
         Row: {
+          display_order: number
           id: string
           label: string
-          display_order: number
         }
-        Insert: Omit<Database['public']['Tables']['skill_groups']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['skill_groups']['Insert']>
-      }
-      skills: {
-        Row: {
+        Insert: {
+          display_order?: number
           id: string
-          skill_group_id: string
           label: string
-          display_order: number
         }
-        Insert: Omit<Database['public']['Tables']['skills']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['skills']['Insert']>
+        Update: {
+          display_order?: number
+          id?: string
+          label?: string
+        }
+        Relationships: []
       }
       skill_tags: {
         Row: {
           skill_id: string
           tag_id: string
         }
-        Insert: Database['public']['Tables']['skill_tags']['Row']
-        Update: Partial<Database['public']['Tables']['skill_tags']['Insert']>
-      }
-      variants: {
-        Row: {
-          id: string
-          label: string | null
-          company: string | null
-          role_slug: string | null
-          created_at: string
+        Insert: {
+          skill_id: string
+          tag_id: string
         }
-        Insert: Omit<Database['public']['Tables']['variants']['Row'], 'created_at'>
-        Update: Partial<Database['public']['Tables']['variants']['Insert']>
-      }
-      variant_profile: {
-        Row: {
-          id: string
-          variant_id: string
-          title: string | null
-          subtitle: string[] | null
-          summary: string[] | null
-          hide_education: boolean | null
+        Update: {
+          skill_id?: string
+          tag_id?: string
         }
-        Insert: Omit<Database['public']['Tables']['variant_profile']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['variant_profile']['Insert']>
+        Relationships: [
+          {
+            foreignKeyName: "skill_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      variant_roles: {
+      skills: {
         Row: {
-          id: string
-          variant_id: string
-          role_id: string
           display_order: number
-          title_override: string | null
-          show_key_tech: boolean | null
+          id: string
+          label: string
+          skill_group_id: string | null
+          tags: string[] | null
         }
-        Insert: Omit<Database['public']['Tables']['variant_roles']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['variant_roles']['Insert']>
+        Insert: {
+          display_order?: number
+          id: string
+          label: string
+          skill_group_id?: string | null
+          tags?: string[] | null
+        }
+        Update: {
+          display_order?: number
+          id?: string
+          label?: string
+          skill_group_id?: string | null
+          tags?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "skills_skill_group_id_fkey"
+            columns: ["skill_group_id"]
+            isOneToOne: false
+            referencedRelation: "skill_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tags: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
+        }
+        Relationships: []
       }
       variant_action_items: {
         Row: {
-          id: string
-          variant_id: string
-          role_id: string
-          text: string
           display_order: number
+          id: number
+          role_id: string | null
+          text: string
+          variant_id: string | null
         }
-        Insert: Omit<Database['public']['Tables']['variant_action_items']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['variant_action_items']['Insert']>
+        Insert: {
+          display_order: number
+          id?: never
+          role_id?: string | null
+          text: string
+          variant_id?: string | null
+        }
+        Update: {
+          display_order?: number
+          id?: never
+          role_id?: string | null
+          text?: string
+          variant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variant_action_items_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variant_action_items_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "variants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       variant_key_tech: {
         Row: {
-          id: string
-          variant_id: string
-          role_id: string
-          name: string
           display_order: number
+          id: number
+          name: string
+          role_id: string | null
+          variant_id: string | null
         }
-        Insert: Omit<Database['public']['Tables']['variant_key_tech']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['variant_key_tech']['Insert']>
+        Insert: {
+          display_order: number
+          id?: never
+          name: string
+          role_id?: string | null
+          variant_id?: string | null
+        }
+        Update: {
+          display_order?: number
+          id?: never
+          name?: string
+          role_id?: string | null
+          variant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variant_key_tech_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variant_key_tech_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      variant_profile: {
+        Row: {
+          hide_education: boolean
+          subtitle: string[] | null
+          summary: string[] | null
+          title: string | null
+          variant_id: string
+        }
+        Insert: {
+          hide_education?: boolean
+          subtitle?: string[] | null
+          summary?: string[] | null
+          title?: string | null
+          variant_id: string
+        }
+        Update: {
+          hide_education?: boolean
+          subtitle?: string[] | null
+          summary?: string[] | null
+          title?: string | null
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variant_profile_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: true
+            referencedRelation: "variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      variant_roles: {
+        Row: {
+          display_order: number
+          role_id: string
+          show_key_tech: boolean | null
+          title_override: string | null
+          variant_id: string
+        }
+        Insert: {
+          display_order: number
+          role_id: string
+          show_key_tech?: boolean | null
+          title_override?: string | null
+          variant_id: string
+        }
+        Update: {
+          display_order?: number
+          role_id?: string
+          show_key_tech?: boolean | null
+          title_override?: string | null
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variant_roles_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variant_roles_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "variants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       variant_skill_groups: {
         Row: {
-          id: string
-          variant_id: string
-          skill_group_id: string
           display_order: number
+          skill_group_id: string
+          variant_id: string
         }
-        Insert: Omit<Database['public']['Tables']['variant_skill_groups']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['variant_skill_groups']['Insert']>
+        Insert: {
+          display_order: number
+          skill_group_id: string
+          variant_id: string
+        }
+        Update: {
+          display_order?: number
+          skill_group_id?: string
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variant_skill_groups_skill_group_id_fkey"
+            columns: ["skill_group_id"]
+            isOneToOne: false
+            referencedRelation: "skill_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variant_skill_groups_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "variants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       variant_skills: {
         Row: {
-          id: string
-          variant_id: string
-          skill_id: string
           display_order: number
           label_override: string | null
+          skill_id: string
+          variant_id: string
         }
-        Insert: Omit<Database['public']['Tables']['variant_skills']['Row'], 'id'>
-        Update: Partial<Database['public']['Tables']['variant_skills']['Insert']>
+        Insert: {
+          display_order: number
+          label_override?: string | null
+          skill_id: string
+          variant_id: string
+        }
+        Update: {
+          display_order?: number
+          label_override?: string | null
+          skill_id?: string
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variant_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "variant_skills_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      variants: {
+        Row: {
+          company: string | null
+          id: string
+          label: string | null
+          name: string | null
+          role_slug: string | null
+        }
+        Insert: {
+          company?: string | null
+          id: string
+          label?: string | null
+          name?: string | null
+          role_slug?: string | null
+        }
+        Update: {
+          company?: string | null
+          id?: string
+          label?: string | null
+          name?: string | null
+          role_slug?: string | null
+        }
+        Relationships: []
       }
     }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
-    CompositeTypes: Record<string, never>
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
 }
 
-// Convenience row types
-export type Profile       = Database['public']['Tables']['profiles']['Row']
-export type ProfileSummary = Database['public']['Tables']['profile_summary']['Row']
-export type Education     = Database['public']['Tables']['education']['Row']
-export type Tag           = Database['public']['Tables']['tags']['Row']
-export type Role          = Database['public']['Tables']['roles']['Row']
-export type RoleKeyTech   = Database['public']['Tables']['role_key_tech']['Row']
-export type ActionItem    = Database['public']['Tables']['action_items']['Row']
-export type ActionItemVariant = Database['public']['Tables']['action_item_variants']['Row']
-export type SkillGroups         = Database['public']['Tables']['skill_groups']['Row']
-export type Skill               = Database['public']['Tables']['skills']['Row']
-export type Variant             = Database['public']['Tables']['variants']['Row']
-export type VariantProfile      = Database['public']['Tables']['variant_profile']['Row']
-export type VariantRole         = Database['public']['Tables']['variant_roles']['Row']
-export type VariantActionItem   = Database['public']['Tables']['variant_action_items']['Row']
-export type VariantKeyTech      = Database['public']['Tables']['variant_key_tech']['Row']
-export type VariantSkillGroup   = Database['public']['Tables']['variant_skill_groups']['Row']
-export type VariantSkill        = Database['public']['Tables']['variant_skills']['Row']
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const
