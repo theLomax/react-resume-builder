@@ -33,7 +33,7 @@ export interface ResumeEducation {
 	institution: string
 	degree: string
 	field?: string
-	year: string
+	year?: string
 }
 
 export interface ResumeSkillGroup {

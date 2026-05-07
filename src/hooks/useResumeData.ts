@@ -7,7 +7,7 @@ export function useResumeData(variantId?: string) {
 	return useQuery<ResumeData>({
 		queryKey: ['resume', variantId ?? 'base'],
 		staleTime: 0,
-		queryFn: async () => {
+		queryFn: async (): Promise<ResumeData> => {
 
 			// ── Production: return pre-fetched static data, no Supabase call ──
 			if (import.meta.env.PROD) {
@@ -156,8 +156,8 @@ export function useResumeData(variantId?: string) {
 						email: profile.email,
 						phone: profile.phone ?? undefined,
 						linkedin: profile.linkedin ?? undefined,
-						location: profile.location,
-						site: profile.site,
+						location: profile.location ?? undefined,
+						site: profile.site ?? undefined,
 						title: variantProfile?.title ?? undefined,
 						subtitle: variantProfile?.subtitle ?? undefined,
 					},

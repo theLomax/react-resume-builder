@@ -56,7 +56,7 @@ export function ProjectPage() {
 	const { slug } = useParams<{ slug: string }>()
 	const project = projects.find(p => p.slug === slug)
 
-	// if (!project) return <Navigate to="/portfolio" replace />
+	if (!project) return null
 
 	return (
 		<PortfolioLayout className={project.themeClass}>
