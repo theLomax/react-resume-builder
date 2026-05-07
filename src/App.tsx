@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
-import { NavButton } from './components/NavButton'
 import { ResumePage } from './components/ResumePage'
 import { SkillsTestPage } from './components/SkillsTestPage'
 import { PortfolioPage } from './pages/PortfolioPage'
@@ -9,7 +8,6 @@ import { ProjectPage } from './pages/ProjectPage'
 function AppContent() {
 	return (
 		<>
-			<NavButton />
 			<Routes>
 				<Route path="/"                   element={<Navigate to="/cv" replace />} />
 				<Route path="/cv"                  element={<ResumePage variantId="default" />} />

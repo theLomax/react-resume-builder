@@ -1,0 +1,18 @@
+RewriteEngine On
+
+Options -Multiviews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
+
+# 1. Redirect root to /cv
+# RewriteRule ^$ /cv [L]
+
+# 2 Skip extensionless rewrite for /styles and /scripts
+# RewriteCond %{REQUEST_URI} ^/(styles|scripts) [NC]
+# RewriteRule ^ - [L]
+
+# 3. Internally map extensionless URL to .html file
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME}.html -f
+# RewriteRule ^(.*)$ $1.html [L]

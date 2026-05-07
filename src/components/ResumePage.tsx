@@ -1,7 +1,11 @@
 import { useSearchParams } from "react-router-dom";
+import { RiDownloadLine } from 'react-icons/ri';
 import { useResumeData } from "../hooks/useResumeData";
 import { useIsPrint } from "../hooks/useIsPrint";
 import { ResumePreview } from "./ResumePreview";
+import { NavButton } from "./NavButton";
+import { Toolbar } from "./Toolbar";
+import styles from "./ResumePage.module.scss";
 
 interface Props {
 	variantId?: string
@@ -17,5 +21,17 @@ export function ResumePage({ variantId: propVariantId }: Props = {}) {
 	if (error) return <div>Error loading resume: {(error as Error).message}</div>
 	if (!data) return null
 
-	return <ResumePreview data={data} isPrint={isPrint} />
+	return (
+		<>
+			{!isPrint && (
+				<Toolbar>
+					<NavButton />
+					<button className={styles.downloadBtn} onClick={() => window.print()}>
+						Download PDF <RiDownloadLine aria-hidden />
+					</button>
+				</Toolbar>
+			)}
+			<ResumePreview data={data} isPrint={isPrint} />
+		</>
+	)
 }

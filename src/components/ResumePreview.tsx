@@ -99,8 +99,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 			<main>
 
 				{/* CONTACT ——————————————————————————————————————— */}
-				{isPrint && (
-					<section id="contact" className={styles.contact}>
+				<section id="contact" className={[styles.contact, styles.printOnly].join(' ')}>
 						<h2>Contact Information</h2>
 						<ul>
 							{/* {
@@ -113,7 +112,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 									</a>
 								</li>
 							)}
-							{data.profile.phone && (
+							{data.profile.phone && !import.meta.env.PROD && (
 								<li className={styles.phone}>
 									<PhoneIcon />
 									<a href={`tel:${data.profile.phone}`}>{data.profile.phone}
@@ -123,7 +122,7 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 							{data.profile.site && (
 								<li className={styles.site}>
 									<LanguageIcon />
-									<a href={data.profile.site} target="blank" rel="noopener noreferrer">{condensedUrl(data.profile.site)}
+									<a href={data.profile.site} target="blank" rel="noopener noreferrer">{data.profile.site}
 									</a>
 								</li>
 							)}
@@ -136,7 +135,6 @@ export function ResumePreview({ data, isPrint = true }: Props) {
 							)}
 						</ul>
 					</section>
-				)}
 
 				<div className={styles.sections}>
 
