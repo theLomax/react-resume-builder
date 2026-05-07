@@ -1,5 +1,5 @@
-import { Link, useParams, Navigate } from 'react-router-dom'
-import { RiArrowLeftLine, RiGithubLine, RiExternalLinkLine } from 'react-icons/ri'
+import { useParams } from 'react-router-dom'
+import { RiGithubLine, RiExternalLinkLine } from 'react-icons/ri'
 import { PortfolioLayout } from '../layouts/PortfolioLayout'
 import { CodeBlock } from '../components/CodeBlock'
 import { projects } from '../data/projects'
