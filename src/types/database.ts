@@ -134,6 +134,84 @@ export type Database = {
         Insert: Database['public']['Tables']['skill_tags']['Row']
         Update: Partial<Database['public']['Tables']['skill_tags']['Insert']>
       }
+      variants: {
+        Row: {
+          id: string
+          label: string | null
+          company: string | null
+          role_slug: string | null
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['variants']['Row'], 'created_at'>
+        Update: Partial<Database['public']['Tables']['variants']['Insert']>
+      }
+      variant_profile: {
+        Row: {
+          id: string
+          variant_id: string
+          title: string | null
+          subtitle: string[] | null
+          summary: string[] | null
+          hide_education: boolean | null
+        }
+        Insert: Omit<Database['public']['Tables']['variant_profile']['Row'], 'id'>
+        Update: Partial<Database['public']['Tables']['variant_profile']['Insert']>
+      }
+      variant_roles: {
+        Row: {
+          id: string
+          variant_id: string
+          role_id: string
+          display_order: number
+          title_override: string | null
+          show_key_tech: boolean | null
+        }
+        Insert: Omit<Database['public']['Tables']['variant_roles']['Row'], 'id'>
+        Update: Partial<Database['public']['Tables']['variant_roles']['Insert']>
+      }
+      variant_action_items: {
+        Row: {
+          id: string
+          variant_id: string
+          role_id: string
+          text: string
+          display_order: number
+        }
+        Insert: Omit<Database['public']['Tables']['variant_action_items']['Row'], 'id'>
+        Update: Partial<Database['public']['Tables']['variant_action_items']['Insert']>
+      }
+      variant_key_tech: {
+        Row: {
+          id: string
+          variant_id: string
+          role_id: string
+          name: string
+          display_order: number
+        }
+        Insert: Omit<Database['public']['Tables']['variant_key_tech']['Row'], 'id'>
+        Update: Partial<Database['public']['Tables']['variant_key_tech']['Insert']>
+      }
+      variant_skill_groups: {
+        Row: {
+          id: string
+          variant_id: string
+          skill_group_id: string
+          display_order: number
+        }
+        Insert: Omit<Database['public']['Tables']['variant_skill_groups']['Row'], 'id'>
+        Update: Partial<Database['public']['Tables']['variant_skill_groups']['Insert']>
+      }
+      variant_skills: {
+        Row: {
+          id: string
+          variant_id: string
+          skill_id: string
+          display_order: number
+          label_override: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['variant_skills']['Row'], 'id'>
+        Update: Partial<Database['public']['Tables']['variant_skills']['Insert']>
+      }
     }
   }
 }
@@ -147,5 +225,12 @@ export type Role          = Database['public']['Tables']['roles']['Row']
 export type RoleKeyTech   = Database['public']['Tables']['role_key_tech']['Row']
 export type ActionItem    = Database['public']['Tables']['action_items']['Row']
 export type ActionItemVariant = Database['public']['Tables']['action_item_variants']['Row']
-export type SkillGroups    = Database['public']['Tables']['skill_groups']['Row']
-export type Skill         = Database['public']['Tables']['skills']['Row']
+export type SkillGroups         = Database['public']['Tables']['skill_groups']['Row']
+export type Skill               = Database['public']['Tables']['skills']['Row']
+export type Variant             = Database['public']['Tables']['variants']['Row']
+export type VariantProfile      = Database['public']['Tables']['variant_profile']['Row']
+export type VariantRole         = Database['public']['Tables']['variant_roles']['Row']
+export type VariantActionItem   = Database['public']['Tables']['variant_action_items']['Row']
+export type VariantKeyTech      = Database['public']['Tables']['variant_key_tech']['Row']
+export type VariantSkillGroup   = Database['public']['Tables']['variant_skill_groups']['Row']
+export type VariantSkill        = Database['public']['Tables']['variant_skills']['Row']
