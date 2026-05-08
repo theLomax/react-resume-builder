@@ -52,23 +52,8 @@
 		}
 
 .tags {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 0.3rem 0.4rem;
-	list-style: none;
-	padding: 0;
-	margin: 0 0 .5rem;
-
-	li {
-		font-size: 0.72rem;
-		letter-spacing: 0.04em;
-		padding: 0.2rem 0.6rem;
-		border-radius: 2rem;
-		border: 1px solid var(--accent-faint);
-		background: var(--accent-bg);
-		font-style: italic;
-	}
+	@include tag-list;
+	margin-block-end: .5rem;
 }
 
 .links {
@@ -80,22 +65,7 @@
 }
 
 .linkBtn {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.35rem;
-	font-size: 0.85rem;
-	padding: 0.4rem 0.9rem;
-	border-radius: 2rem;
-	border: 1px solid var(--accent-border);
-	background: var(--bg2);
-	color: var(--text);
-	text-decoration: none;
-	transition: border-color 0.15s ease, box-shadow 0.15s ease;
-
-	&:hover {
-		border-color: var(--accent);
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-	}
+	@include pill-button(0.85rem, 0.4rem 0.9rem, 0.35rem, $fade: false);
 }
 
 // ── Content layout ─────────────────────────────────────────────────────────────
@@ -171,7 +141,7 @@
 		flex-direction: row;
 		align-items: center;
 		column-gap: var(--col-gap);
-		@media (width <= 799px) {
+		@include bp-tablet {
 			flex-direction: column;
 		}
 	}
@@ -203,7 +173,7 @@
 }
 
 .rev-r {
-  @media (width > 799px) {
+  @media (width > #{$bp-tablet}) {
     flex-direction: row-reverse;
   }
 }

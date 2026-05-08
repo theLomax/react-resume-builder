@@ -52,7 +52,7 @@
 			"contact contact"
 			"aside sections";
 		grid-template-columns: 200px 1fr;
-		@media screen and (width <= 600px) {
+		@media screen and (width <= #{$bp-mobile}) {
 			grid-template-areas:
 				"sections"
 				"aside";
@@ -261,10 +261,10 @@ aside {
 		// @media (prefers-color-scheme: dark) {
 		// 	background: #0008;
 		// }
-		@media screen and (width <= 1126px) {
+		@media screen and (width <= #{$bp-wide}) {
 			border-inline-start: none;
 		}
-		@media screen and (width <= 600px) {
+		@media screen and (width <= #{$bp-mobile}) {
 			margin-block-start: 1rem;
 			margin-inline: 1rem;
 			padding: .5rem 1rem .75rem;
@@ -328,24 +328,7 @@ aside {
 // ── Global icon theme utilities ───────────────────────────────────────────────
 // Applied via iconThemeConfig — theme-relative, not content-specific.
 // Each class targets exactly one context; combine them for compound behaviour.
-
-.invertDark {
-	@media screen and (prefers-color-scheme: dark) {
-		filter: invert(1);
-	}
-}
-
-.invertLight {
-	@media screen and (prefers-color-scheme: light) {
-		filter: invert(1);
-	}
-}
-
-.invertPrint {
-	@media print {
-		filter: invert(1);
-	}
-}
+@include icon-theme-utilities;
 
 .companyIcon {
 	color: var(--text-h);
