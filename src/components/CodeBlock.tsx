@@ -1,20 +1,8 @@
-import { useState, useEffect } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { coldarkCold } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { useDarkMode } from '../hooks/useDarkMode'
 import styles from './CodeBlock.module.scss'
-
-function useDarkMode() {
-	const mq = () => window.matchMedia('(prefers-color-scheme: dark)')
-	const [dark, setDark] = useState(() => mq().matches)
-	useEffect(() => {
-		const handler = (e: MediaQueryListEvent) => setDark(e.matches)
-		const media   = mq()
-		media.addEventListener('change', handler)
-		return () => media.removeEventListener('change', handler)
-	}, [])
-	return dark
-}
 
 interface Props {
 	lang?:      string

@@ -121,14 +121,14 @@ export function ResumePreview({ data }: Props) {
 							{data.profile.site && (
 								<li className={styles.site}>
 									<LanguageIcon />
-									<a href={data.profile.site} target="blank" rel="noopener noreferrer">{data.profile.site}
+									<a href={data.profile.site} target="_blank" rel="noopener noreferrer">{data.profile.site}
 									</a>
 								</li>
 							)}
 							{data.profile.linkedin && (
 								<li className={styles.linkedin}>
 									<LinkedInIcon />
-									<a href={data.profile.linkedin} target="blank" rel="noopener noreferrer">{condensedUrl(data.profile.linkedin)}
+									<a href={data.profile.linkedin} target="_blank" rel="noopener noreferrer">{condensedUrl(data.profile.linkedin)}
 									</a>
 								</li>
 							)}
