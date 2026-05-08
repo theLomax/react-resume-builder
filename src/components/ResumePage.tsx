@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router-dom";
 import { RiDownloadLine } from 'react-icons/ri';
-import { RiPrinterLine } from 'react-icons/ri';
 import { useResumeData } from "../hooks/useResumeData";
 import { useIsPrint } from "../hooks/useIsPrint";
 import { ResumePreview } from "./ResumePreview";
