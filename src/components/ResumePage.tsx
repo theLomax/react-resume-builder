@@ -27,7 +27,7 @@ export function ResumePage({ variantId: propVariantId }: Props = {}) {
 			{!isPrint && (
 				<Toolbar>
 					<NavButton />
-					<a href="/cv.pdf" download="James-Lomax--Resume.pdf" className={styles.downloadBtn}>
+					<a href="/cv.pdf" download={`${data.profile.firstName}-${data.profile.lastName}${data.profile.title ? `--${data.profile.title.replace(/\s+/g, '-')}` : '--cv'}.pdf`} className={styles.downloadBtn}>
 						<RiDownloadLine aria-hidden /> Download PDF
 					</a>
 					<button className={styles.printBtn} onClick={() => window.print()}>
