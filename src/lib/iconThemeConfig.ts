@@ -55,6 +55,8 @@ export const iconThemeConfig: Record<string, IconThemeConfig> = {
 	'github':     { invertDark: true },
 	'expo go':    { invertDark: true },
 	'express.js': { invertDark: true },
+	// Light-on-transparent marks — invisible in light mode without inversion
+	'next.js':    { invertDark: true },
 
 	// ── Company icons ─────────────────────────────────────────────────────────
 	// Hawkeye: screen uses the SVG component as-is; print uses a colour-correct flat SVG
