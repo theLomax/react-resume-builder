@@ -1,18 +1,16 @@
+@use '../styles/mixins' as *;
+
 .codeBlock {
 	position: relative;
 	background: var(--code-bg);   // VS Code dark — intentionally fixed, not theme-relative
-	border-radius: 0.5rem 1.5rem;
-	border: 1px solid var(--accent-border);
-	corner-shape: bevel;
 	overflow: hidden;
 	font-family: var(--mono);
 	font-size: 0.85rem;
 	line-height: 1.6;
 	max-width: 100%;
-	width: calc-size(fit-content, size + 2.5rem);
-	border-radius: .75rem 1.25rem .75rem .5rem;
-	corner-shape: bevel;
 	width: 100%;
+	@include bevel(.75rem, 1.25rem, .75rem, .5rem);
+	@include bevel-border;
 }
 
 .lang {
@@ -23,11 +21,15 @@
 	color: var(--text);
 	font-size: 0.72rem;
 	letter-spacing: 0.08em;
+	text-align: start;
 	text-transform: uppercase;
-	border-end-end-radius: 2rem;
-	corner-block-end-shape: bevel;
 	width: calc-size(fit-content, size + 5%);
 	mix-blend-mode: luminosity;
+
+	@supports (corner-shape: bevel) {
+		border-end-end-radius: 2rem;
+		corner-block-end-shape: bevel;
+	}
 }
 
 .pre {

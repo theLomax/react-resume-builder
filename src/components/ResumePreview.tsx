@@ -84,7 +84,7 @@ export function ResumePreview({ data }: Props) {
 						</span>
 						{data.profile.subtitle?.length
 						? <>
-								<span className={styles.hideMobile}>  ·  </span>
+								<span className={styles.hideMobile}> · </span>
 								{data.profile.subtitle.map((row, i) => (
 									<span key={i}>{row}</span>
 								))}

@@ -1,3 +1,5 @@
+@use '../styles/mixins' as *;
+
 :root {
 	--entry-gap: 2rem;
 	--icon-size-screen: 75px;
@@ -253,6 +255,9 @@ aside {
     margin-block-start: -8.5rem;
 		z-index: 1;
 		border-inline: 1px solid var(--accent-muted);
+		@supports (-moz-appearance: none) {
+			margin-block-start: -9.5rem;
+		}
 		// @media (prefers-color-scheme: dark) {
 		// 	background: #0008;
 		// }
@@ -261,11 +266,10 @@ aside {
 		}
 		@media screen and (width <= 600px) {
 			margin-block-start: 1rem;
-			border: 1px solid var(--accent-muted);
 			margin-inline: 1rem;
-			border-radius: 0.5rem 1.5rem .5rem .75rem;
-			corner-shape: bevel;
 			padding: .5rem 1rem .75rem;
+			@include bevel(0.5rem, 1.5rem, .5rem, .75rem);
+			@include bevel-border(var(--accent-muted));
 		}
 		
 		@media print {

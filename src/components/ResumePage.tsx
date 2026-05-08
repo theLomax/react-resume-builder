@@ -30,9 +30,6 @@ export function ResumePage({ variantId: propVariantId }: Props = {}) {
 					<a href="/cv.pdf" download={`${data.profile.firstName}-${data.profile.lastName}${data.profile.title ? `--${data.profile.title.replace(/\s+/g, '-')}` : '--cv'}.pdf`} className={styles.downloadBtn}>
 						<RiDownloadLine aria-hidden /> Download PDF
 					</a>
-					<button className={styles.printBtn} onClick={() => window.print()}>
-						<RiPrinterLine aria-hidden /> Print
-					</button>
 				</Toolbar>
 			)}
 			<ResumePreview data={data} />

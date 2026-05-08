@@ -1,33 +1,44 @@
+@use '../styles/mixins' as *;
+
 .card {
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	border: 1px solid var(--accent-border);
-	border-radius: 0.75rem;
 	overflow: hidden;
 	background: var(--bg2);
-	transition: box-shadow 0.2s ease, border-color 0.2s ease;
-	corner-shape: bevel;
+	transition: box-shadow 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+	@include bevel(0.75rem, 0.75rem, 0.75rem, 0.75rem);
+	@include bevel-border;
 
 	&:hover {
-		border-color: var(--accent);
-		box-shadow: var(--shadow);
+		// Fallback: drop-shadow simulates border-color + box-shadow on clipped element
+		filter:
+			drop-shadow(0 0 0.5px var(--accent))
+			drop-shadow(0 0 0.5px var(--accent))
+			drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1))
+			drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
+
+		@supports (corner-shape: bevel) {
+			filter: none;
+			border-color: var(--accent);
+			box-shadow: var(--shadow);
+		}
 	}
 
 	&:nth-of-type(4n+1) {
-		border-radius: .75rem 1.85rem .75rem 1.25rem;
+		@include bevel(.75rem, 1.85rem, .75rem, 1.25rem);
 	}
 
 	&:nth-of-type(4n+2) {
-		border-radius: 0.75rem 1.25rem 1.75rem .75rem;
+		@include bevel(0.75rem, 1.25rem, 1.75rem, .75rem);
 	}
 
 	&:nth-of-type(4n+3) {
-		border-radius: 1.5rem 0.75rem 1rem 1.25rem;
+		@include bevel(1.5rem, 0.75rem, 1rem, 1.25rem);
 	}
 
 	&:nth-of-type(4n+4) {
-		border-radius: 0.75rem 1.25rem 2rem 1.25rem;
+		@include bevel(0.75rem, 1.25rem, 2rem, 1.25rem);
 	}
 }
 

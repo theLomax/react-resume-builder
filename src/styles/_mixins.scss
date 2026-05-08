@@ -1,0 +1,42 @@
+/// Apply a bevel shape with cross-browser fallback.
+///
+/// • All browsers (fallback): clip-path polygon for bevel geometry +
+///   drop-shadow to simulate a 1px border along the clipped edge.
+/// • Chrome (enhancement): @supports (corner-shape: bevel) restores native
+///   border, border-radius, and corner-shape for pixel-perfect rendering.
+///
+/// @param {Length} $tl  - top-left corner cut size
+/// @param {Length} $tr  - top-right corner cut size
+/// @param {Length} $br  - bottom-right corner cut size
+/// @param {Length} $bl  - bottom-left corner cut size
+/// @param {Color}  $color - border / shadow color (default: var(--accent-border))
+
+@mixin bevel($tl, $tr, $br, $bl) {
+	border-radius: #{$tl} #{$tr} #{$br} #{$bl};
+	clip-path: polygon(
+		#{$tl} 0%,
+		calc(100% - #{$tr}) 0%,
+		100% #{$tr},
+		100% calc(100% - #{$br}),
+		calc(100% - #{$br}) 100%,
+		#{$bl} 100%,
+		0% calc(100% - #{$bl}),
+		0% #{$tl}
+	);
+
+	@supports (corner-shape: bevel) {
+		clip-path: none;
+		filter: none;
+		border-radius: #{$tl} #{$tr} #{$br} #{$bl};
+		corner-shape: bevel;
+	}
+}
+
+
+@mixin bevel-border($color: var(--accent-border)) {
+	filter: drop-shadow(0 0 0.75px #{$color}) drop-shadow(0 0 0.75px #{$color});
+	@supports (corner-shape: bevel) {
+		filter: none;
+		border: 1px solid #{$color};
+	}
+}

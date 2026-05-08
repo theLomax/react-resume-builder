@@ -1,3 +1,5 @@
+@use './mixins' as *;
+
 :root {
   --text: #2b2b2b;
   --text-h: #08060d;
@@ -169,13 +171,14 @@ code {
 section {
   text-align: left;
   margin-block-start: 1rem;
-  border: 1px solid var(--accent-muted);
   margin-inline: 1rem;
-  border-radius: 0.5rem 1.5rem .5rem .75rem;
-  corner-shape: bevel;
   padding: .5rem 1rem .75rem;
+  @include bevel(0.5rem, 1.5rem, .5rem, .75rem);
+	@include bevel-border(var(--accent-muted));
   @media print {
     border: none;
+    clip-path: none;
+    filter: none;
     padding: 0;
   }
 }
