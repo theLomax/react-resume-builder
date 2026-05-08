@@ -1,23 +1,6 @@
+@use '../styles/mixins' as *;
+
 .downloadBtn,
 .printBtn {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.35rem;
-	padding: 0.375rem 0.875rem;
-	border-radius: 2rem;
-	border: 1px solid var(--accent-border);
-	background: var(--bg2);
-	color: var(--text);
-	font-size: 0.8rem;
-	letter-spacing: 0.03em;
-	white-space: nowrap;
-	cursor: pointer;
-	opacity: 0.6;
-	transition: opacity 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-
-	&:hover {
-		opacity: 1;
-		border-color: var(--accent);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-	}
+	@include pill-button;
 }

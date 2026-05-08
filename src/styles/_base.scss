@@ -33,7 +33,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (width <= 1024px) {
+  @include bp-desktop {
     font-size: 16px;
   }
 }
