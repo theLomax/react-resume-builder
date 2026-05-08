@@ -9,7 +9,8 @@
     "build": "node scripts/fetch-cv.mjs && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "pdf": "node scripts/generate-pdf.mjs"
+    "pdf": "node scripts/generate-pdf.mjs",
+    "pdf:publish": "node scripts/generate-pdf.mjs --out=public/cv.pdf"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

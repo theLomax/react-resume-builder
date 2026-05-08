@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { RiDownloadLine } from 'react-icons/ri';
+import { RiPrinterLine } from 'react-icons/ri';
 import { useResumeData } from "../hooks/useResumeData";
 import { useIsPrint } from "../hooks/useIsPrint";
 import { ResumePreview } from "./ResumePreview";
@@ -26,8 +27,11 @@ export function ResumePage({ variantId: propVariantId }: Props = {}) {
 			{!isPrint && (
 				<Toolbar>
 					<NavButton />
-					<button className={styles.downloadBtn} onClick={() => window.print()}>
-						Download PDF <RiDownloadLine aria-hidden />
+					<a href="/cv.pdf" download="James-Lomax--Resume.pdf" className={styles.downloadBtn}>
+						<RiDownloadLine aria-hidden /> Download PDF
+					</a>
+					<button className={styles.printBtn} onClick={() => window.print()}>
+						<RiPrinterLine aria-hidden /> Print
 					</button>
 				</Toolbar>
 			)}

@@ -42,6 +42,7 @@ const flags = Object.fromEntries(
 
 const variantId = flags.variant ?? positional ?? null
 const name      = flags.name ?? 'James-Lomax'
+const outOverride = flags.out ?? null
 
 // ── Load manifest ────────────────────────────────────────────────────────────
 
@@ -72,7 +73,9 @@ const filename = title
 	: `${name}--Resume.pdf`
 
 let outPath
-if (company) {
+if (outOverride) {
+	outPath = resolve(outOverride)
+} else if (company) {
 	outPath = resolve(`./exports/focused/${company}/${filename}`)
 } else if (variantId) {
 	outPath = resolve(`./exports/focused/${variantId}/${filename}`)
