@@ -96,24 +96,7 @@
 }
 
 .tags {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 0.3rem 0.4rem;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-
-	li {
-		font-size: 0.72rem;
-		letter-spacing: 0.04em;
-		padding: 0.2rem 0.6rem;
-		border-radius: 2rem;
-		border: 1px solid var(--accent-faint);
-		background: var(--accent-bg);
-		color: var(--text);
-		font-style: italic;
-	}
+	@include tag-list;
 }
 
 .footer {
