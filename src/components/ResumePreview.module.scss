@@ -91,7 +91,8 @@
 			}
 
 			&.education,
-			&.experience {
+			&.experience,
+			&.solo {
 				.wrapper {
 					display: flex;
 				}
@@ -147,7 +148,8 @@
 				}
 			}
 
-			&.experience {
+			&.experience,
+			&.solo {
 				.wrapper {
 					flex-wrap: wrap;
 					gap: calc(var(--entry-gap)/2) 1rem;
@@ -224,6 +226,20 @@
 				@media print {
 					hr {
 						break-after: avoid;
+					}
+				}
+			}
+
+			&.solo {
+				.entry {
+					.entryContent {
+						display: flex;
+						column-gap: 1rem;
+						align-items: center;
+						h3, p {
+							margin-block: auto;
+							text-box-trim: trim-both;
+						}
 					}
 				}
 			}
@@ -307,6 +323,10 @@ aside {
 				li {
 					margin-block-start: 0.5rem;
 					color: var(--skill-text);
+					> span:last-of-type {
+						text-indent: .5rem hanging;
+						display: inline-block;
+					}
 				}
 			}
 			&.hasIcons {
@@ -317,6 +337,10 @@ aside {
 						grid-template-columns: 1.5rem 1fr;
 						align-items: center;
 						gap: .5rem;
+
+						.skillIcon {
+							grid-area: icon;
+						}
 					}
 				}
 			}

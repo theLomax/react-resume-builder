@@ -80,12 +80,10 @@ export function ResumePreview({ data }: Props) {
 				</h1>
 				<hgroup>
 					<p>
-						<span>
-							{data.profile.title ?? "title"}
-						</span>
+						{data.profile.title && <span>{data.profile.title}</span>}
 						{data.profile.subtitle?.length
 						? <>
-								<span className={styles.hideMobile}> · </span>
+								{data.profile.title && <span className={styles.hideMobile}> · </span>}
 								{data.profile.subtitle.map((row, i) => (
 									<span key={i}>{row}</span>
 								))}
@@ -198,7 +196,7 @@ export function ResumePreview({ data }: Props) {
 
 					{/* SOLO ENGINEERING ——————————————————————————————————————— */}
 					{soloRoles.length > 0 && (
-						<section id="solo-engineering" className={styles.experience}>
+						<section id="solo-engineering" className={styles.solo}>
 							<h2>Solo Engineering</h2>
 							<div className={styles.wrapper}>
 								{soloRoles.map((role, i) => {
@@ -209,6 +207,15 @@ export function ResumePreview({ data }: Props) {
 											<div className={[styles.entry, styles.sameCompany].join(' ')}>
 												<div className={styles.entryContent}>
 													<h3>{role.title}</h3>
+													{role.start_year && (
+														<p className={styles.dates}>
+															<span className={styles.start_year}>{role.start_year}</span>
+															{role.end_year !== role.start_year && <>
+																<span> – </span>
+																<span className={styles.end_year}>{role.end_year}</span>
+															</>}
+														</p>
+													)}
 												</div>
 												{showKeyTech && (
 													<ul className={[styles.keytech, !role.keyTech?.length && styles.empty].filter(Boolean).join(' ')}>
@@ -268,8 +275,11 @@ export function ResumePreview({ data }: Props) {
 										const themeClass = getIconThemeClass(key, styles)
 										return (
 											<li key={j}>
-												<span className={themeClass || undefined}>{Icon && <Icon color={color} size={27} />}</span>
-												<span>{skill}</span>
+												<span className={[styles.skillIcon, themeClass].filter(Boolean).join(' ')}>{Icon && <Icon color={color} size={27} />}</span>
+												{/<[^>]+>/.test(skill)
+											? <span dangerouslySetInnerHTML={{ __html: skill }} />
+											: <span>{skill}</span>
+										}
 											</li>
 										)
 									})}
