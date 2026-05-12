@@ -152,6 +152,10 @@ p {
   // color: var(--text)
 }
 
+#summary p:not(:last-of-type) {
+  margin-block-end: 1rem;
+}
+
 code,
 .counter {
   font-family: var(--mono);

@@ -34,3 +34,6 @@ _tmp_*
 
 # Generated at build time from Supabase
 src/data/cv-static.json
+# Claude Code and MCP settings (may contain sensitive permission allowances)
+.claude/
+.mcp.json

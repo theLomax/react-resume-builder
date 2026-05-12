@@ -13,7 +13,7 @@ interface Props {
 
 export function ResumePage({ variantId: propVariantId }: Props = {}) {
 	const [searchParams] = useSearchParams()
-	const variantId = propVariantId ?? searchParams.get('variant') ?? undefined
+	const variantId = (searchParams.get('variant') ?? propVariantId ?? undefined)?.toLowerCase()
 	const isPrint = useIsPrint()
 	const { data, isLoading, error } = useResumeData(variantId)
 
