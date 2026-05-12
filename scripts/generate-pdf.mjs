@@ -104,9 +104,9 @@ let outPath
 if (outOverride) {
 	outPath = resolve(outOverride)
 } else if (company) {
-	outPath = resolve(`./exports/focused/${company}/${filename}`)
+	outPath = resolve(`./exports/${company}/${filename}`)
 } else if (variantId) {
-	outPath = resolve(`./exports/focused/${variantId}/${filename}`)
+	outPath = resolve(`./exports/${variantId}/${filename}`)
 } else {
 	outPath = resolve(`./exports/${filename}`)
 }
@@ -212,8 +212,8 @@ try {
 	try {
 		await page.pdf({
 			path: outPath,
-			format: 'Letter',
-			margin: { top: '0.5in', bottom: '0.5in', left: '0', right: '0' },
+			format: 'A4',
+			margin: { top: '0.5in', bottom: '0.3in', left: '0', right: '0' },
 			printBackground: true,
 			preferCSSPageSize: false,
 		})
