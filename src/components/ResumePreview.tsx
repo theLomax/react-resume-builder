@@ -1,3 +1,4 @@
+import React from 'react'
 import type { ResumeData } from '../types/resume'
 import styles from './ResumePreview.module.scss'
 
@@ -11,7 +12,7 @@ import { companyLogos, companyIcons } from '../lib/companyLogos'
 import { iconThemeConfig, getIconThemeClass } from '../lib/iconThemeConfig'
 import { Fragment } from 'react'
 
-function CompanyLogo({ company }: { company: string }) {
+const CompanyLogo = React.memo(function CompanyLogo({ company }: { company: string }) {
 	const key     = company.toLowerCase()
 	const Icon    = companyIcons[key]
 	const cfg     = iconThemeConfig[key]
@@ -44,7 +45,7 @@ function CompanyLogo({ company }: { company: string }) {
 	}
 
 	return <img src={src} alt={company} className={classes} />
-}
+})
 
 function computeLastKeytechIndex(roles: ResumeData['roles']) {
 	return roles.reduce((max, role, i) => {
