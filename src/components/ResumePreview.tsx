@@ -63,8 +63,9 @@ export function ResumePreview({ data }: Props) {
 		url.replace(/^https?:\/\/(www\.)?/, '')
 
 	// Split roles into employed (Experience section) and solo (Solo Engineering section)
-	const employedRoles = data.roles.filter(r => r.company !== 'Solo Engineering')
-	const soloRoles     = data.roles.filter(r => r.company === 'Solo Engineering')
+	const soloCompanies = new Set(['Independent Work', 'Solo Engineering'])
+	const employedRoles = data.roles.filter(r => !soloCompanies.has(r.company))
+	const soloRoles     = data.roles.filter(r =>  soloCompanies.has(r.company))
 
 	// Each section gets its own watermark so gaps don't bleed across sections
 	const lastEmployedKT = computeLastKeytechIndex(employedRoles)
@@ -159,7 +160,7 @@ export function ResumePreview({ data }: Props) {
 										<div className={[styles.entry, sameCompany && styles.sameCompany].filter(Boolean).join(' ')}>
 											{!sameCompany && <CompanyLogo company={role.company} />}
 											<div className={styles.entryContent}>
-												{!sameCompany && <h3>{role.company}{role.company_em && <em> ({role.company_em})</em>}</h3>}
+												{!sameCompany && <h3>{role.company}{role.company_em && <em> {role.company_em}</em>}</h3>}
 												{role.title_em && <p className={styles.titleEm}>{role.title_em}</p>}
 												<p className={styles.title}>{role.title}</p>
 												{role.start_year && (
