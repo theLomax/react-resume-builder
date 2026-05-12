@@ -10,7 +10,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "pdf": "node scripts/generate-pdf.mjs",
-    "pdf:publish": "node scripts/generate-pdf.mjs --out=public/cv.pdf"
+    "pdf:publish": "node scripts/generate-pdf.mjs --out=public/cv.pdf",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@storybook/react-vite": "^10.3.6",
     "@tailwindcss/vite": "^4.2.4",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
@@ -39,6 +42,7 @@
     "globals": "^17.5.0",
     "puppeteer": "^24.42.0",
     "sass-embedded": "^1.99.0",
+    "storybook": "^10.3.6",
     "tailwindcss": "^4.2.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
