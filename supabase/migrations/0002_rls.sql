@@ -30,3 +30,7 @@ create policy "public read" on action_item_tags    for select using (true);
 create policy "public read" on skill_groups        for select using (true);
 create policy "public read" on skills              for select using (true);
 create policy "public read" on skill_tags          for select using (true);
+
+-- Grant service_role write access (required for seed scripts)
+grant all on all tables    in schema public to service_role;
+grant all on all sequences in schema public to service_role;
