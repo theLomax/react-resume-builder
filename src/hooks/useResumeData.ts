@@ -18,6 +18,8 @@ export function useResumeData(variantId?: string) {
 			const { data: profile, error: profileError } = await supabase
 				.from('profiles')
 				.select('*')
+				.order('created_at', { ascending: false })
+				.limit(1)
 				.single()
 
 			if (profileError) throw profileError
