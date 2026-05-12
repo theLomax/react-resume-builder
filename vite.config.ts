@@ -16,7 +16,7 @@ export default defineConfig(({ command }) => ({
       transformIndexHtml(html) {
         if (command !== 'serve') return html
         const svg = readFileSync(resolve(__dirname, 'public/favicon.svg'), 'utf-8')
-        const devSvg = svg.replace(/\bfill="[^"]*"/, 'fill="#22c55e"')
+        const devSvg = svg.replace(/(class="primary"[^>]*)fill="[^"]*"/, '$1fill="#22c55e"')
         const dataUri = `data:image/svg+xml,${encodeURIComponent(devSvg)}`
         return html.replace(/(<link rel="icon"[^>]*href=")[^"]*(")/,`$1${dataUri}$2`)
       },
