@@ -115,6 +115,8 @@
 	color: var(--accent);
 	text-decoration: none;
 	font-weight: 500;
+	text-box-trim: trim-both;
+	line-height: normal;
 
 	// Stretched link — expands the click target to the whole card.
 	// .links sits above this via z-index so icon links remain independent.
